@@ -1,16 +1,33 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import Switch from "react-switch";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
-import { Input } from 'semantic-ui-react';
+import { Icon, Input } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
+const SwitchButton = props => {
+
+    return (
+        <>
+            <span class="source-toggle-title">&nbsp;&nbsp;NYTimes&nbsp;&nbsp;&nbsp;</span>
+            <Switch 
+                uncheckedIcon={false} 
+                checkedIcon={false} 
+                className="react-switch" 
+                onColor="#08f" 
+            />
+            <span class="source-toggle-title">&nbsp;&nbsp;&nbsp;&nbsp;Guardian</span>
+        </>
+    );
+}
+
 const NavigationBar = () => (
     <>
-    <Navbar bg="dark" variant="dark">
+    <Navbar variant="dark" sticky={true} id="navigation-bar">
         <Form inline>
             <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
         </Form>
@@ -22,6 +39,8 @@ const NavigationBar = () => (
         <Nav.Link href="#technology">Technology</Nav.Link>
         <Nav.Link href="#sports">Sports</Nav.Link>
         </Nav>
+        <Icon inverted color="grey" size="large" name="bookmark outline" />
+        <SwitchButton />
     </Navbar>
     </>
 );

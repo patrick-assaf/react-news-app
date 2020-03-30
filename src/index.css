@@ -1,0 +1,16 @@
+html, body {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.source-toggle-title {
+    color: white;
+}
+
+.search-text-box {
+    width: 280px;
+}
+
+#navigation-bar {
+    background-image: linear-gradient(to right, #17284F, #476DB8);
+}
