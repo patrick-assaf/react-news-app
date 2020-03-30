@@ -3,15 +3,16 @@ import ReactDOM from 'react-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
+import { Input } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-const NavigationBar = props => (
+const NavigationBar = () => (
     <>
     <Navbar bg="dark" variant="dark">
         <Form inline>
-            <FormControl type="text" placeholder="Enter keyword..." className="search-text-box" />
+            <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
         </Form>
         <Nav className="mr-auto">
         <Nav.Link href="#home">Home</Nav.Link>
