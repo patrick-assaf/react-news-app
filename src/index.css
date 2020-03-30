@@ -14,3 +14,7 @@ html, body {
 #navigation-bar {
     background-image: linear-gradient(to right, #17284F, #476DB8);
 }
+
+.react-switch:focus {
+    outline: none;
+}

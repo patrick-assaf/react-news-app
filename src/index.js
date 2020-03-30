@@ -9,18 +9,26 @@ import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-const SwitchButton = props => {
+const SwitchButton = () => {
+
+    const [state, setState] = React.useState(true);
+
+    const toggleChecked = () => {
+        setState((previous) => !previous);
+    };
 
     return (
         <>
-            <span class="source-toggle-title">&nbsp;&nbsp;NYTimes&nbsp;&nbsp;&nbsp;</span>
-            <Switch 
-                uncheckedIcon={false} 
-                checkedIcon={false} 
-                className="react-switch" 
-                onColor="#08f" 
-            />
-            <span class="source-toggle-title">&nbsp;&nbsp;&nbsp;&nbsp;Guardian</span>
+                <span className="source-toggle-title">&nbsp;&nbsp;NYTimes&nbsp;&nbsp;&nbsp;</span>
+                <Switch 
+                    uncheckedIcon={false} 
+                    checkedIcon={false} 
+                    className="react-switch" 
+                    onColor="#08f" 
+                    onChange={toggleChecked} 
+                    checked={state}
+                />
+                <span className="source-toggle-title">&nbsp;&nbsp;&nbsp;&nbsp;Guardian</span>
         </>
     );
 }
