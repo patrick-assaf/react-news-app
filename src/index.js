@@ -51,28 +51,27 @@ const NavigationBar = () => (
     </>
 );
 
-const Customers = () => {
-    const [state, setState] = React.useState([]);
-
-    const getData = async() => {
-        const response = await fetch("http://localhost:5000/api/test");
-        const data = await response.json();
-        if(response.status !== 200) {
-            throw Error(data.message);
+class Customers extends Component {
+    constructor() {
+        super();
+        this.state = {
+            customers: []
         }
-        return data;
     }
 
-    getData().then(data => {
-        setState(data);
-        console.log("Customers fetched..", state);
-    });
+    componentDidMount() {
+        fetch("http://localhost:5000/api/test")
+            .then(result => result.json())
+            .then(customers => this.setState({customers}, () => console.log("Customers fetched..", customers)));
+    }
 
-    return (
-        <div>
-            <h2>Customers</h2>
-        </div>
-    );
+    render = () => {
+        return (
+            <div>
+                <h2>Customers</h2>
+            </div>
+        );
+    }
 }
 
 const ArticleCard = props => (
