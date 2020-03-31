@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Switch from "react-switch";
 import Navbar from 'react-bootstrap/Navbar';
@@ -19,16 +19,16 @@ const SwitchButton = () => {
 
     return (
         <>
-                <span className="source-toggle-title">&nbsp;&nbsp;NYTimes&nbsp;&nbsp;&nbsp;</span>
-                <Switch 
-                    uncheckedIcon={false} 
-                    checkedIcon={false} 
-                    className="react-switch" 
-                    onColor="#08f" 
-                    onChange={toggleChecked} 
-                    checked={state}
-                />
-                <span className="source-toggle-title">&nbsp;&nbsp;&nbsp;&nbsp;Guardian</span>
+            <span className="source-toggle-title">&nbsp;&nbsp;NYTimes&nbsp;&nbsp;&nbsp;</span>
+            <Switch 
+                uncheckedIcon={false} 
+                checkedIcon={false} 
+                className="react-switch" 
+                onColor="#08f" 
+                onChange={toggleChecked} 
+                checked={state}
+            />
+            <span className="source-toggle-title">&nbsp;&nbsp;&nbsp;&nbsp;Guardian</span>
         </>
     );
 }
