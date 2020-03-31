@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Switch from "react-switch";
 import Navbar from 'react-bootstrap/Navbar';
@@ -10,9 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 const SwitchButton = () => {
-
     const [state, setState] = React.useState(true);
-
     const toggleChecked = () => {
         setState((previous) => !previous);
     };
@@ -53,10 +51,34 @@ const NavigationBar = () => (
     </>
 );
 
+const Customers = () => {
+    const [state, setState] = React.useState([]);
+
+    const getData = async() => {
+        const response = await fetch("http://localhost:5000/api/test");
+        const data = await response.json();
+        if(response.status !== 200) {
+            throw Error(data.message);
+        }
+        return data;
+    }
+
+    getData().then(data => {
+        setState(data);
+        console.log("Customers fetched..", state);
+    });
+
+    return (
+        <div>
+            <h2>Customers</h2>
+        </div>
+    );
+}
+
 const ArticleCard = props => (
     <></>
 );
 
 ReactDOM.render(
-    <NavigationBar />, document.getElementById('root')
+    <Customers />, document.getElementById('root')
 );
