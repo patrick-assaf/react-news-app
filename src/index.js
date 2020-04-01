@@ -88,12 +88,13 @@ class Headlines extends Component {
             return (
                 <div>
                     {articles.response.results.map(article =>
+                        article.blocks.main.elements[0].assets.length !== 0 ?
                         <ArticleCard 
                             key={article} 
                             img_url={article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file} 
                             title={article.webTitle} 
                             description={article.blocks.body[0].bodyTextSummary} 
-                        />
+                        /> : <></>
                     )}
                 </div>
             );
