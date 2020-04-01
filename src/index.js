@@ -56,12 +56,25 @@ const ArticleCard = props => (
         <div className="headline-card">
             <img alt="" src={props.img_url} />
             <div className="headline-container">
-                <h3><b>{props.title}</b></h3>
+                <h5><b>{props.title}</b></h5>
                 <p>{props.description}</p>
             </div>
         </div>
     </div>
 );
+
+function cutoff(string) {
+    var char = 520;
+    if(string.length <= 520) {
+        return string;
+    }
+    else {
+        while(string[char] !== ' ' && char < 530) {
+            char += 1;
+        }
+        return string.substring(0, char);
+    }
+}
 
 class Headlines extends Component {
     constructor(props) {
@@ -74,12 +87,11 @@ class Headlines extends Component {
     componentDidMount() {
         fetch("http://localhost:5000/guardian")
             .then(result => result.json())
-            .then(articles => this.setState({articles}, () => console.log("Articles fetched..", this.state)));
+            .then(articles => this.setState({articles}, () => console.log(this.state)));
     }
 
     render = () => {
         const { articles } = this.state;
-        console.log("Render data..", this.state)
         if (articles.length === 0) {
             return (
                 <div>Loading...</div>
@@ -87,13 +99,13 @@ class Headlines extends Component {
         } else {
             return (
                 <div>
-                    {articles.response.results.map(article =>
-                        article.blocks.main.elements[0].assets.length !== 0 ?
+                    {articles.response.results.map((article, index) =>
+                        article.blocks.main.elements[0].assets.length !== 0 ? 
                         <ArticleCard 
-                            key={article} 
+                            key={index} 
                             img_url={article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file} 
                             title={article.webTitle} 
-                            description={article.blocks.body[0].bodyTextSummary} 
+                            description={cutoff(article.blocks.body[0].bodyTextSummary)} 
                         /> : <></>
                     )}
                 </div>
@@ -104,8 +116,10 @@ class Headlines extends Component {
 
 const HomePage = () => (
     <>
-        <NavigationBar />
+    <NavigationBar />
+    <div className="main-container">
         <Headlines />
+    </div>
     </>
 );
 

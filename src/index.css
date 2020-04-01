@@ -13,10 +13,18 @@ html, body {
 
 #navigation-bar {
     background-image: linear-gradient(to right, #17284F, #476DB8);
+    margin-bottom: 0px;
 }
 
 .react-switch:focus {
     outline: none;
+}
+
+.main-container {
+    text-align: center;
+    margin: 0 auto;
+    display: table;
+    border-spacing: 0px 10px;
 }
 
 .card-row {
@@ -25,25 +33,27 @@ html, body {
 
 .headline-card {
     transition: 0.3s;
-    width: 100%;
-    height: 120px;
-    border-radius: 7px 7px 7px 7px;
+    height: 200px;
+    border-radius: 4px 4px 4px 4px;
     text-align: left;
-    background-color: #f1f1f1;
+    background-color: white;
     border: solid;
     border-width: thin;
-    border-color: gray;
+    border-color: rgb(180, 180, 180);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .headline-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     cursor: pointer;
 }
 
 .headline-card img {
-    height: 80px;
-    width: 80px;
+    height: 200px;
+    width: 300px;
     object-fit: cover;
     float: left;
     padding-left: 20px;
@@ -53,6 +63,6 @@ html, body {
 }
 
 .headline-container {
-    padding: 2px 16px;
+    padding: 20px 16px;
     height: 80px;  
 }
