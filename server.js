@@ -6,13 +6,15 @@ app.use(cors());
 
 const port = process.env.PORT || 5000;
 
-app.get('/api/test', (req, res) => {
-    const customers = [
-        {id: 1, firstName: 'John', lastName: 'Doe'},
-        {id: 2, firstName: 'Patrick', lastName: 'Assaf'},
-        {id: 3, firstName: 'Yara', lastName: 'Naufal'}
-    ]
-    res.json(customers);
+app.get('/guardian', (req, res) => {
+
+    const articles = [];
+
+    fetch("https://content.guardianapis.com/search?api-key=591a92b9-9797-407f-96ee-41cd7dbb3532&section=(sport|business|technology|politics)&show-blocks=all")
+            .then(result => result.json())
+            .then(data => articles = {data});
+
+    res.json(articles);
 });
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

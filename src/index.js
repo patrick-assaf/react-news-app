@@ -55,27 +55,20 @@ class Customers extends Component {
     constructor() {
         super();
         this.state = {
-            customers: []
+            articles: []
         }
     }
 
     componentDidMount() {
-        fetch("http://localhost:5000/api/test")
+        fetch("http://localhost:5000/guardian")
             .then(result => result.json())
-            .then(customers => this.setState({customers}, () => console.log("Customers fetched..", customers)));
+            .then(articles => this.setState({articles}, () => console.log("Articles fetched..", articles)));
     }
 
     render = () => {
         return (
             <div>
                 <h2>Customers</h2>
-                <ul>
-                    {this.state.customers.map(customer =>
-                        <li key={customer.id}>
-                            {customer.firstName} {customer.lastName}
-                        </li>
-                    )}
-                </ul>
             </div>
         );
     }
