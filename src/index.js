@@ -51,7 +51,16 @@ const NavigationBar = () => (
     </>
 );
 
-class Customers extends Component {
+const ArticleCard = props => {
+
+    return (
+        <>
+            
+        </>
+    );
+}
+
+class Headlines extends Component {
     constructor() {
         super();
         this.state = {
@@ -62,13 +71,13 @@ class Customers extends Component {
     componentDidMount() {
         fetch("http://localhost:5000/guardian")
             .then(result => result.json())
-            .then(articles => this.setState({articles}, () => console.log("Articles fetched..", articles)));
+            .then(articles => this.setState({articles}, () => console.log("Articles fetched..", this.state)));
     }
 
     render = () => {
         return (
             <div>
-                <h2>Customers</h2>
+                <h2>Headlines</h2>
             </div>
         );
     }
@@ -77,12 +86,8 @@ class Customers extends Component {
 const HomePage = () => (
     <>
         <NavigationBar />
-        <Customers />
+        <Headlines />
     </>
-);
-
-const ArticleCard = props => (
-    <></>
 );
 
 ReactDOM.render(
