@@ -18,3 +18,41 @@ html, body {
 .react-switch:focus {
     outline: none;
 }
+
+.card-row {
+    display: table-row;
+}
+
+.headline-card {
+    transition: 0.3s;
+    width: 100%;
+    height: 120px;
+    border-radius: 7px 7px 7px 7px;
+    text-align: left;
+    background-color: #f1f1f1;
+    border: solid;
+    border-width: thin;
+    border-color: gray;
+}
+
+.headline-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.headline-card img {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    float: left;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.headline-container {
+    padding: 2px 16px;
+    height: 80px;  
+}

@@ -51,18 +51,21 @@ const NavigationBar = () => (
     </>
 );
 
-const ArticleCard = props => {
-
-    return (
-        <>
-            
-        </>
-    );
-}
+const ArticleCard = props => (
+    <div className="card-row">
+        <div className="headline-card">
+            <img alt="" src={props.img_url} />
+            <div className="headline-container">
+                <h3><b>{props.title}</b></h3>
+                <p>{props.description}</p>
+            </div>
+        </div>
+    </div>
+);
 
 class Headlines extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             articles: []
         }
@@ -75,11 +78,26 @@ class Headlines extends Component {
     }
 
     render = () => {
-        return (
-            <div>
-                <h2>Headlines</h2>
-            </div>
-        );
+        const { articles } = this.state;
+        console.log("Render data..", this.state)
+        if (articles.length === 0) {
+            return (
+                <div>Loading...</div>
+            );
+        } else {
+            return (
+                <div>
+                    {articles.response.results.map(article =>
+                        <ArticleCard 
+                            key={article} 
+                            img_url={article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file} 
+                            title={article.webTitle} 
+                            description={article.blocks.body[0].bodyTextSummary} 
+                        />
+                    )}
+                </div>
+            );
+        }
     }
 }
 
