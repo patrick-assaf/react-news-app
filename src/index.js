@@ -106,7 +106,12 @@ class Headlines extends Component {
                             img_url={article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file} 
                             title={article.webTitle} 
                             description={cutoff(article.blocks.body[0].bodyTextSummary)} 
-                        /> : <></>
+                        /> : <ArticleCard 
+                            key={index} 
+                            img_url="https://assets.guim.co.uk/images/eada8aa27c12fe2d5afa3a89d3fbae0d/fallback-logo.png" 
+                            title={article.webTitle} 
+                            description={cutoff(article.blocks.body[0].bodyTextSummary)} 
+                        />
                     )}
                 </div>
             );
