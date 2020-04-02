@@ -39,7 +39,7 @@ html, body {
     background-color: white;
     border: solid;
     border-width: thin;
-    border-color: rgb(180, 180, 180);
+    border-color: rgb(220, 220, 220);
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 30px;
@@ -63,5 +63,20 @@ html, body {
 
 .headline-container {
     padding: 20px 16px;
-    height: 80px;  
+    height: 80px;
+}
+
+.bottom-card-info {
+    display: table;
+}
+
+.date-tag {
+    display: table-cell;
+}
+
+.section-tag {
+    text-align: center;
+    margin: 0 auto;
+    display: table-cell;
+    padding: 2px 2px 2px 2px;
 }

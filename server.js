@@ -8,7 +8,7 @@ app.use(cors());
 const port = process.env.PORT || 5000;
 
 function cutoff(string) {
-    var char = 510;
+    let char = 510;
     if(string.length <= 510) {
         return string;
     }
@@ -18,6 +18,10 @@ function cutoff(string) {
         }
         return string.substring(0, char);
     }
+}
+
+function dateFormat(date) {
+    return date.slice(0, date.search("T"));
 }
 
 app.get('/guardian', (req, res) => {
@@ -36,14 +40,18 @@ app.get('/guardian', (req, res) => {
                     key: `${index}`, 
                     img: `${article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file}`,
                     title: `${article.webTitle}`,
-                    description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`
+                    description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`,
+                    date: `${dateFormat(article.webPublicationDate)}`,
+                    section: `${article.sectionId}`
                 } :
                 guardianObj[index] = 
                 {
                     key: `${index}`, 
                     img: default_img,
                     title: `${article.webTitle}`,
-                    description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`
+                    description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`,
+                    date: `${dateFormat(article.webPublicationDate)}`,
+                    section: `${article.sectionId}`
                 }
             )
             return guardianObj;

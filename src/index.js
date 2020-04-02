@@ -10,15 +10,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 const colors = {
-    world: '',
-    politics: '',
-    business: '',
-    technology: '',
-    sports: '',
-    other: '',
-    guardian: '',
-    nytimes: ''
+    world: '#7C4FFF',
+    politics: '#419488',
+    business: '#4696EC',
+    technology: '#CEDC3A',
+    sport: '#F7C244',
+    other: '#6E757B',
+    guardian: '#14284A',
+    nytimes: '#DDDDDD'
 }
+
+const text = {
+    world: 'white',
+    politics: 'white',
+    business: 'white',
+    technology: 'black',
+    sport: 'black',
+    other: 'white',
+    guardian: 'white',
+    nytimes: 'black'
+}
+
+const SectionTag = props => (
+    <p 
+        className="section-tag" 
+        style={colors[props.section] !== undefined ? 
+            { backgroundColor: colors[props.section], color: text[props.section] } : 
+            { backgroundColor: colors['other'], color: text['other'] }}
+    ><b>
+        {props.section.toUpperCase()}
+    </b></p>
+);
 
 const SwitchButton = () => {
     const [state, setState] = React.useState(true);
@@ -69,6 +91,9 @@ const ArticleCard = props => (
             <div className="headline-container">
                 <h5><b>{props.title}</b></h5>
                 <p>{props.description}...</p>
+                <div className="bottom-card-info">
+                    <p className="date-tag"><i>{props.date}</i></p><SectionTag section={props.section} />
+                </div>
             </div>
         </div>
     </div>
@@ -103,6 +128,8 @@ class Headlines extends Component {
                             img_url={article.img} 
                             title={article.title} 
                             description={article.description} 
+                            date={article.date}
+                            section={article.section}
                         />
                     )}
                 </div>
