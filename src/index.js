@@ -9,6 +9,17 @@ import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
+const colors = {
+    world: '',
+    politics: '',
+    business: '',
+    technology: '',
+    sports: '',
+    other: '',
+    guardian: '',
+    nytimes: ''
+}
+
 const SwitchButton = () => {
     const [state, setState] = React.useState(true);
     const toggleChecked = () => {
@@ -57,24 +68,11 @@ const ArticleCard = props => (
             <img alt="" src={props.img_url} />
             <div className="headline-container">
                 <h5><b>{props.title}</b></h5>
-                <p>{props.description}</p>
+                <p>{props.description}...</p>
             </div>
         </div>
     </div>
 );
-
-function cutoff(string) {
-    var char = 520;
-    if(string.length <= 520) {
-        return string;
-    }
-    else {
-        while(string[char] !== ' ' && char < 530) {
-            char += 1;
-        }
-        return string.substring(0, char);
-    }
-}
 
 class Headlines extends Component {
     constructor(props) {
@@ -99,18 +97,12 @@ class Headlines extends Component {
         } else {
             return (
                 <div>
-                    {articles.response.results.map((article, index) =>
-                        article.blocks.main.elements[0].assets.length !== 0 ? 
+                    {articles.map((article) =>
                         <ArticleCard 
-                            key={index} 
-                            img_url={article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file} 
-                            title={article.webTitle} 
-                            description={cutoff(article.blocks.body[0].bodyTextSummary)} 
-                        /> : <ArticleCard 
-                            key={index} 
-                            img_url="https://assets.guim.co.uk/images/eada8aa27c12fe2d5afa3a89d3fbae0d/fallback-logo.png" 
-                            title={article.webTitle} 
-                            description={cutoff(article.blocks.body[0].bodyTextSummary)} 
+                            key={article.key} 
+                            img_url={article.img} 
+                            title={article.title} 
+                            description={article.description} 
                         />
                     )}
                 </div>
