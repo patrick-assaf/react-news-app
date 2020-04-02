@@ -7,6 +7,8 @@ import Form from 'react-bootstrap/Form';
 import { Icon, Input } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
 const colors = {
@@ -89,7 +91,10 @@ const ArticleCard = props => (
         <div className="headline-card">
             <img alt="" src={props.img_url} />
             <div className="headline-container">
-                <h5><b>{props.title}</b></h5>
+                <div className="title-container">
+                    <h5 className="article-title"><b>{props.title}</b></h5>
+                    <Icon name="share alternate" />
+                </div>
                 <p>{props.description}...</p>
                 <div className="bottom-card-info">
                     <p className="date-tag"><i>{props.date}</i></p><SectionTag section={props.section} />
