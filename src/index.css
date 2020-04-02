@@ -67,16 +67,17 @@ html, body {
 }
 
 .bottom-card-info {
-    display: table;
+    overflow: hidden;
 }
 
 .date-tag {
-    display: table-cell;
+    float: left;
 }
 
 .section-tag {
+    border-radius: 5px 5px 5px 5px;
     text-align: center;
     margin: 0 auto;
-    display: table-cell;
-    padding: 2px 2px 2px 2px;
+    float: right;
+    padding: 2px 5px 2px 5px;
 }
