@@ -81,3 +81,11 @@ html, body {
     float: right;
     padding: 2px 5px 2px 5px;
 }
+
+.title-container {
+    overflow: hidden;
+}
+
+.article-title {
+    float: left;
+}
