@@ -96,6 +96,11 @@ html, body {
     cursor: auto;
 }
 
+.share-button {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
 .share-button:focus {
     outline: none;
 }

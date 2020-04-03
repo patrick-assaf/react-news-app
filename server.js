@@ -7,6 +7,10 @@ app.use(cors());
 
 const port = process.env.PORT || 5000;
 
+function isvalid(value) {
+    return (value !== null && value !== '' && value !== undefined);
+}
+
 function cutoff(string) {
     let char = 510;
     if(string.length <= 510) {
@@ -34,7 +38,7 @@ app.get('/guardian', (req, res) => {
         .then(result => result.json())
         .then(data => {
             data.response.results.map((article, index) =>
-                article.blocks.main.elements[0].assets.length !== 0 ?
+                (article.blocks.main.elements[0].assets.length !== 0 && isvalid(article.blocks.body[0].bodyTextSummary)) ?
                 guardianObj[index] = 
                 {
                     key: `${index}`, 
