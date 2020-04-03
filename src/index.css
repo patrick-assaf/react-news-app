@@ -93,4 +93,9 @@ html, body {
 .share-tab {
     width: 400px;
     color: black;
+    cursor: auto;
+}
+
+.share-button:focus {
+    outline: none;
 }

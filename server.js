@@ -42,7 +42,8 @@ app.get('/guardian', (req, res) => {
                     title: `${article.webTitle}`,
                     description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`,
                     date: `${dateFormat(article.webPublicationDate)}`,
-                    section: `${article.sectionId}`
+                    section: `${article.sectionId}`,
+                    url: `${article.webUrl}`
                 } :
                 guardianObj[index] = 
                 {
@@ -51,7 +52,8 @@ app.get('/guardian', (req, res) => {
                     title: `${article.webTitle}`,
                     description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`,
                     date: `${dateFormat(article.webPublicationDate)}`,
-                    section: `${article.sectionId}`
+                    section: `${article.sectionId}`,
+                    url: `${article.webUrl}`
                 }
             )
             return guardianObj;

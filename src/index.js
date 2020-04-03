@@ -9,6 +9,8 @@ import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { EmailShareButton, FacebookShareButton, TwitterShareButton } from "react-share";
+import { EmailIcon, FacebookIcon, TwitterIcon } from "react-share";
 import './index.css';
 
 const colors = {
@@ -91,6 +93,15 @@ const ShareTab = props => (
         <h5>{props.title}</h5>
         <hr></hr>
         <p>Share via</p>
+        <FacebookShareButton hashtag="#CSCI_571_NewsApp" url={props.url} className="share-button">
+            <FacebookIcon round={true} size={50} />
+        </FacebookShareButton>
+        <TwitterShareButton url={props.url} hashtags={["CSCI_571_NewsApp"]} className="share-button">
+            <TwitterIcon round={true} size={50} />
+        </TwitterShareButton>
+        <EmailShareButton url={props.url} subject="CSCI_571_NewsApp" className="share-button">
+            <EmailIcon round={true} size={50} />
+        </EmailShareButton>
     </>
 );
 
@@ -102,9 +113,7 @@ class ArticleCard extends Component {
     }
     
     share() {
-        if(!toast.isActive(this.props.key)) {
-            toast(<ShareTab title={this.props.title} />, { toastId: this.props.key, className: "share-tab" });
-        }
+        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "share-tab" });
     }
 
     render () {
@@ -157,8 +166,9 @@ class Headlines extends Component {
                             img_url={article.img} 
                             title={article.title} 
                             description={article.description} 
-                            date={article.date}
-                            section={article.section}
+                            date={article.date} 
+                            section={article.section} 
+                            url={article.url}
                         />
                     )}
                 </div>
@@ -172,7 +182,7 @@ const HomePage = () => (
     <NavigationBar />
     <div className="main-container">
         <Headlines />
-        <ToastContainer autoClose={false} position="top-center" transition={Slide} />
+        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
     </div>
     </>
 );
