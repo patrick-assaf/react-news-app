@@ -65,4 +65,41 @@ app.get('/guardian', (req, res) => {
         .then(articles => res.json(articles));
 });
 
+app.get('/nytimes', (req, res) => {
+
+    const url = "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV";
+    const default_img = "https://upload.wikimedia.org/wikipedia/commons/0/0e/Nytimes_hq.jpg";
+    const nytimesObj = [];
+
+    fetch(url)
+        .then(result => result.json())
+        .then(data => {
+            data.results.map((article, index) =>
+                (isvalid(article.abstract)) ?
+                nytimesObj[index] = 
+                {
+                    key: `${index}`, 
+                    img: `${article.multimedia[0].url}`,
+                    title: `${article.title}`,
+                    description: `${cutoff(article.abstract)}`,
+                    date: `${dateFormat(article.published_date)}`,
+                    section: `${article.section}`,
+                    url: `${article.url}`
+                } :
+                nytimesObj[index] = 
+                {
+                    key: `${index}`, 
+                    img: default_img,
+                    title: `${article.title}`,
+                    description: `${cutoff(article.abstract)}`,
+                    date: `${dateFormat(article.published_date)}`,
+                    section: `${article.section}`,
+                    url: `${article.url}`
+                }
+            )
+            return nytimesObj;
+        })
+        .then(articles => res.json(articles));
+});
+
 app.listen(port, () => console.log(`Server started on port ${port}`));
