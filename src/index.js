@@ -87,10 +87,11 @@ const NavigationBar = () => (
 );
 
 const ShareTab = props => (
-    <div className="share-tab">
+    <>
         <h5>{props.title}</h5>
-        
-    </div>
+        <hr></hr>
+        <p>Share via</p>
+    </>
 );
 
 class ArticleCard extends Component {
@@ -102,7 +103,7 @@ class ArticleCard extends Component {
     
     share() {
         if(!toast.isActive(this.props.key)) {
-            toast(<ShareTab title={this.props.title} />, { toastId: this.props.key });
+            toast(<ShareTab title={this.props.title} />, { toastId: this.props.key, className: "share-tab" });
         }
     }
 
