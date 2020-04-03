@@ -86,23 +86,31 @@ const NavigationBar = () => (
     </>
 );
 
-const ArticleCard = props => (
-    <div className="card-row">
-        <div className="headline-card">
-            <img alt="" src={props.img_url} />
-            <div className="headline-container">
-                <div className="title-container">
-                    <h5 className="article-title"><b>{props.title}</b></h5>
-                    <Icon name="share alternate" />
-                </div>
-                <p>{props.description}...</p>
-                <div className="bottom-card-info">
-                    <p className="date-tag"><i>{props.date}</i></p><SectionTag section={props.section} />
+const ArticleCard = props => {
+
+    const notify = () => {
+        toast("It Works!");
+    }
+
+    return (
+        <div className="card-row">
+            <div className="headline-card">
+                <img alt="" src={props.img_url} />
+                <div className="headline-container">
+                    <div className="title-container">
+                        <h5 className="article-title"><b>{props.title}</b></h5>
+                        <Icon onClick={notify} name="share alternate" />
+                        <ToastContainer />
+                    </div>
+                    <p>{props.description}...</p>
+                    <div className="bottom-card-info">
+                        <p className="date-tag"><i>{props.date}</i></p><SectionTag section={props.section} />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+}
 
 class Headlines extends Component {
     constructor(props) {
