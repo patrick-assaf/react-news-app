@@ -86,11 +86,13 @@ const NavigationBar = () => (
     </>
 );
 
-const ArticleCard = props => {
+const ShareTab = props => (
+    <>
+    {props.title}
+    </>
+);
 
-    const notify = () => {
-        toast("It Works!");
-    }
+const ArticleCard = props => {
 
     return (
         <div className="card-row">
@@ -99,7 +101,7 @@ const ArticleCard = props => {
                 <div className="headline-container">
                     <div className="title-container">
                         <h5 className="article-title"><b>{props.title}</b></h5>
-                        <Icon onClick={notify} name="share alternate" />
+                        <Icon name="share alternate" onClick={() => toast(<ShareTab title={props.title} />)} />
                         <ToastContainer />
                     </div>
                     <p>{props.description}...</p>
