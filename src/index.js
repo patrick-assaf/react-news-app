@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import { Icon, Input } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
@@ -92,26 +92,39 @@ const ShareTab = props => (
     </>
 );
 
-const ArticleCard = props => {
+class ArticleCard extends Component {
 
-    return (
-        <div className="card-row">
-            <div className="headline-card">
-                <img alt="" src={props.img_url} />
-                <div className="headline-container">
-                    <div className="title-container">
-                        <h5 className="article-title"><b>{props.title}</b></h5>
-                        <Icon name="share alternate" onClick={() => toast(<ShareTab title={props.title} />)} />
-                        <ToastContainer />
-                    </div>
-                    <p>{props.description}...</p>
-                    <div className="bottom-card-info">
-                        <p className="date-tag"><i>{props.date}</i></p><SectionTag section={props.section} />
+    constructor(props) {
+        super(props);
+        this.share = this.share.bind(this);
+    }
+    
+    share() {
+        if(!toast.isActive(this.props.key)) {
+            toast(<ShareTab title={this.props.title} />, { toastId: this.props.key });
+        }
+    }
+
+    render () {
+        return (
+            <div className="card-row">
+                <div className="headline-card">
+                    <img alt="" src={this.props.img_url} />
+                    <div className="headline-container">
+                        <div className="title-container">
+                            <h5 className="article-title"><b>{this.props.title}</b></h5>
+                            <Icon name="share alternate" onClick={this.share} />
+                            <ToastContainer autoClose={false} position="top-center" transition={Slide} />
+                        </div>
+                        <p>{this.props.description}...</p>
+                        <div className="bottom-card-info">
+                            <p className="date-tag"><i>{this.props.date}</i></p><SectionTag section={this.props.section} />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 class Headlines extends Component {
