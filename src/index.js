@@ -87,9 +87,10 @@ const NavigationBar = () => (
 );
 
 const ShareTab = props => (
-    <>
-    {props.title}
-    </>
+    <div className="share-tab">
+        <h5>{props.title}</h5>
+        
+    </div>
 );
 
 class ArticleCard extends Component {
@@ -114,7 +115,6 @@ class ArticleCard extends Component {
                         <div className="title-container">
                             <h5 className="article-title"><b>{this.props.title}</b></h5>
                             <Icon name="share alternate" onClick={this.share} />
-                            <ToastContainer autoClose={false} position="top-center" transition={Slide} />
                         </div>
                         <p>{this.props.description}...</p>
                         <div className="bottom-card-info">
@@ -171,6 +171,7 @@ const HomePage = () => (
     <NavigationBar />
     <div className="main-container">
         <Headlines />
+        <ToastContainer autoClose={false} position="top-center" transition={Slide} />
     </div>
     </>
 );

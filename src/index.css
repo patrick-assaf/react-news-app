@@ -89,3 +89,7 @@ html, body {
 .article-title {
     float: left;
 }
+
+.share-tab {
+    color: black;
+}
