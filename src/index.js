@@ -4,6 +4,7 @@ import Switch from "react-switch";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
+import Image from 'react-bootstrap/Image';
 import { Icon, Input } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -120,7 +121,7 @@ class ArticleCard extends Component {
         return (
             <div className="card-row">
                 <div className="headline-card">
-                    <img alt="" src={this.props.img_url} />
+                    <Image src={this.props.img_url} thumbnail />
                     <div className="headline-container">
                         <div className="title-container">
                             <h5 className="article-title"><b>{this.props.title}</b></h5>
@@ -177,13 +178,28 @@ class Headlines extends Component {
     }
 }
 
+const MainComponent = () => {
+
+    const [state, setState] = React.useState("Main-Page-Guardian");
+
+    return (
+        <>
+            <NavigationBar />
+            <div className="main-container">
+                {state === "Main-Page-Guardian" ? (
+                <>
+                    <Headlines />
+                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
+                </>
+                ) : ( <h3>NY Times</h3> ) }
+            </div>
+        </>
+    );
+}
+
 const HomePage = () => (
     <>
-    <NavigationBar />
-    <div className="main-container">
-        <Headlines />
-        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-    </div>
+        <MainComponent />
     </>
 );
 

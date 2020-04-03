@@ -33,7 +33,7 @@ html, body {
 
 .headline-card {
     transition: 0.3s;
-    height: 200px;
+    height: 240px;
     border-radius: 4px 4px 4px 4px;
     text-align: left;
     background-color: white;
@@ -55,10 +55,10 @@ html, body {
     width: 300px;
     object-fit: cover;
     float: left;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 .headline-container {
