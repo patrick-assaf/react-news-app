@@ -145,7 +145,7 @@ class ArticleCard extends Component {
     }
 }
 
-class Headlines extends Component {
+class GuardianHeadlines extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -185,6 +185,46 @@ class Headlines extends Component {
     }
 }
 
+class NYHeadlines extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            articles: []
+        }
+    }
+
+    componentDidMount() {
+        fetch("http://localhost:5000/nytimes")
+            .then(result => result.json())
+            .then(articles => this.setState({articles}, () => console.log(this.state)));
+    }
+
+    render = () => {
+        const { articles } = this.state;
+        if (articles.length === 0) {
+            return (
+                <div>Loading...</div>
+            );
+        } else {
+            return (
+                <div>
+                    {articles.map((article) =>
+                        <ArticleCard 
+                            key={article.key} 
+                            img_url={article.img} 
+                            title={article.title} 
+                            description={article.description} 
+                            date={article.date} 
+                            section={article.section} 
+                            url={article.url}
+                        />
+                    )}
+                </div>
+            );
+        }
+    }
+}
+
 class MainComponent extends Component {
 
     constructor(props) {
@@ -193,7 +233,12 @@ class MainComponent extends Component {
     }
 
     changePage(newPage) {
-        this.setState({ page: newPage })
+        this.setState({ page: newPage });
+        this.forceUpdateHandler();
+    }
+
+    forceUpdateHandler() {
+        this.forceUpdate();
     }
 
     render = () => {
@@ -202,7 +247,7 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <Headlines />
+                        <GuardianHeadlines page={this.state.page} />
                         <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
@@ -213,7 +258,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>NY Times</h3>
+                        <NYHeadlines page={this.state.page} />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );

@@ -37,8 +37,16 @@ app.get('/guardian', (req, res) => {
     fetch(url)
         .then(result => result.json())
         .then(data => {
-            data.response.results.map((article, index) =>
-                (article.blocks.main.elements[0].assets.length !== 0 && isvalid(article.blocks.body[0].bodyTextSummary)) ?
+            data.response.results.filter((article) => {
+                if(isvalid(article.blocks.body[0].bodyTextSummary)) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            })
+            .map((article, index) =>
+                (article.blocks.main.elements[0].assets.length !== 0) ?
                 guardianObj[index] = 
                 {
                     key: `${index}`, 
@@ -65,6 +73,17 @@ app.get('/guardian', (req, res) => {
         .then(articles => res.json(articles));
 });
 
+function getImage(multimedia) {
+    for(const image in multimedia) {
+        if(multimedia[image].width >= 2000) {
+            return multimedia[image].url;
+        }
+        if(image === (multimedia.length)-1 && multimedia[image].width < 2000) {
+            return "https://upload.wikimedia.org/wikipedia/commons/0/0e/Nytimes_hq.jpg";
+        }
+    }
+}
+
 app.get('/nytimes', (req, res) => {
 
     const url = "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV";
@@ -74,22 +93,19 @@ app.get('/nytimes', (req, res) => {
     fetch(url)
         .then(result => result.json())
         .then(data => {
-            data.results.map((article, index) =>
-                (isvalid(article.abstract)) ?
+            data.results.filter((article) => {
+                if(isvalid(article.abstract)) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            })
+            .map((article, index) =>
                 nytimesObj[index] = 
                 {
                     key: `${index}`, 
-                    img: `${article.multimedia[0].url}`,
-                    title: `${article.title}`,
-                    description: `${cutoff(article.abstract)}`,
-                    date: `${dateFormat(article.published_date)}`,
-                    section: `${article.section}`,
-                    url: `${article.url}`
-                } :
-                nytimesObj[index] = 
-                {
-                    key: `${index}`, 
-                    img: default_img,
+                    img: `${getImage(article.multimedia)}`,
                     title: `${article.title}`,
                     description: `${cutoff(article.abstract)}`,
                     date: `${dateFormat(article.published_date)}`,
