@@ -51,6 +51,12 @@ const SwitchButton = props => {
     const [state, setState] = React.useState(true);
     const toggleChecked = () => {
         setState((previous) => !previous);
+        if(state === false) {
+            props.data.changePage("Main-Page-Guardian");
+        }
+        else if(state === true) {
+            props.data.changePage("Main-Page-NY");
+        }
     };
 
     return (
@@ -63,7 +69,7 @@ const SwitchButton = props => {
                 onColor="#08f" 
                 onChange={toggleChecked} 
                 checked={state}
-                source={props.source}
+                data={props.data}
             />
             <span className="source-toggle-title">&nbsp;&nbsp;&nbsp;&nbsp;Guardian</span>
         </>
@@ -85,7 +91,7 @@ const NavigationBar = props => (
         <Nav.Link href="#sports">Sports</Nav.Link>
         </Nav>
         <Icon inverted color="grey" size="large" name="bookmark outline" />
-        <SwitchButton source={props.source}/>
+        <SwitchButton data={props.data} />
     </Navbar>
     </>
 );
@@ -186,11 +192,15 @@ class MainComponent extends Component {
         this.state = { page: "Main-Page-Guardian" };
     }
 
+    changePage(newPage) {
+        this.setState({ page: newPage })
+    }
+
     render = () => {
         if(this.state.page === "Main-Page-Guardian") {
             return (
                 <>
-                    <NavigationBar source={this.state} />
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
                         <Headlines />
                         <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
@@ -201,7 +211,7 @@ class MainComponent extends Component {
         else if(this.state.page === "Main-Page-NY") {
             return (
                 <>
-                    <NavigationBar />
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
                         <h3>NY Times</h3>
                     </div>
