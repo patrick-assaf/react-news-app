@@ -12,6 +12,7 @@ import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { EmailShareButton, FacebookShareButton, TwitterShareButton } from "react-share";
 import { EmailIcon, FacebookIcon, TwitterIcon } from "react-share";
+import BounceLoader from "react-spinners/BounceLoader";
 import './index.css';
 
 const colors = {
@@ -163,7 +164,16 @@ class GuardianHeadlines extends Component {
         const { articles } = this.state;
         if (articles.length === 0) {
             return (
-                <div>Loading...</div>
+                <>
+                    <div className="bounce-loader">
+                        <BounceLoader
+                            size={60}
+                            color={"#123abc"}
+                            loading={true}
+                        />
+                    </div>
+                    <h4><b>Loading</b></h4>
+                </>
             );
         } else {
             return (
@@ -203,7 +213,16 @@ class NYHeadlines extends Component {
         const { articles } = this.state;
         if (articles.length === 0) {
             return (
-                <div>Loading...</div>
+                <>
+                    <div className="bounce-loader">
+                        <BounceLoader
+                            size={60}
+                            color={"#123abc"}
+                            loading={true}
+                        />
+                    </div>
+                    <h4><b>Loading</b></h4>
+                </>
             );
         } else {
             return (
