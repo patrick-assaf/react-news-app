@@ -38,7 +38,9 @@ app.get('/guardian', (req, res) => {
         .then(result => result.json())
         .then(data => {
             data.response.results.filter((article) => {
-                if(isvalid(article.blocks.body[0].bodyTextSummary)) {
+                if(isvalid(article.blocks.body[0].bodyTextSummary) && isvalid(article.blocks.main.elements[0].assets)
+                && isvalid(article.webTitle) && isvalid(article.webPublicationDate) && isvalid(article.sectionId)
+                && isvalid(article.webUrl)) {
                     return true;
                 }
                 else {
@@ -46,21 +48,12 @@ app.get('/guardian', (req, res) => {
                 }
             })
             .map((article, index) =>
-                (article.blocks.main.elements[0].assets.length !== 0) ?
                 guardianObj[index] = 
                 {
                     key: `${index}`, 
-                    img: `${article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file}`,
-                    title: `${article.webTitle}`,
-                    description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`,
-                    date: `${dateFormat(article.webPublicationDate)}`,
-                    section: `${article.sectionId}`,
-                    url: `${article.webUrl}`
-                } :
-                guardianObj[index] = 
-                {
-                    key: `${index}`, 
-                    img: default_img,
+                    img: (article.blocks.main.elements[0].assets.length !== 0) ? 
+                        `${article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file}`
+                        : default_img,
                     title: `${article.webTitle}`,
                     description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`,
                     date: `${dateFormat(article.webPublicationDate)}`,
@@ -78,10 +71,8 @@ function getImage(multimedia) {
         if(multimedia[image].width >= 2000) {
             return multimedia[image].url;
         }
-        if(image === (multimedia.length)-1 && multimedia[image].width < 2000) {
-            return "https://upload.wikimedia.org/wikipedia/commons/0/0e/Nytimes_hq.jpg";
-        }
     }
+    return "none";
 }
 
 app.get('/nytimes', (req, res) => {
@@ -94,7 +85,8 @@ app.get('/nytimes', (req, res) => {
         .then(result => result.json())
         .then(data => {
             data.results.filter((article) => {
-                if(isvalid(article.abstract)) {
+                if(isvalid(article.abstract) && isvalid(article.multimedia) && isvalid(article.title)
+                && isvalid(article.published_date) && isvalid(article.section) && isvalid(article.url)) {
                     return true;
                 }
                 else {
@@ -105,7 +97,7 @@ app.get('/nytimes', (req, res) => {
                 nytimesObj[index] = 
                 {
                     key: `${index}`, 
-                    img: `${getImage(article.multimedia)}`,
+                    img: (`${getImage(article.multimedia)}` !== "none") ? `${getImage(article.multimedia)}` : default_img,
                     title: `${article.title}`,
                     description: `${cutoff(article.abstract)}`,
                     date: `${dateFormat(article.published_date)}`,
