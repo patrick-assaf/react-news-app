@@ -47,7 +47,7 @@ const SectionTag = props => (
     </b></p>
 );
 
-const SwitchButton = () => {
+const SwitchButton = props => {
     const [state, setState] = React.useState(true);
     const toggleChecked = () => {
         setState((previous) => !previous);
@@ -63,13 +63,14 @@ const SwitchButton = () => {
                 onColor="#08f" 
                 onChange={toggleChecked} 
                 checked={state}
+                source={props.source}
             />
             <span className="source-toggle-title">&nbsp;&nbsp;&nbsp;&nbsp;Guardian</span>
         </>
     );
 }
 
-const NavigationBar = () => (
+const NavigationBar = props => (
     <>
     <Navbar variant="dark" sticky={true} id="navigation-bar">
         <Form inline>
@@ -84,7 +85,7 @@ const NavigationBar = () => (
         <Nav.Link href="#sports">Sports</Nav.Link>
         </Nav>
         <Icon inverted color="grey" size="large" name="bookmark outline" />
-        <SwitchButton />
+        <SwitchButton source={props.source}/>
     </Navbar>
     </>
 );
@@ -178,23 +179,36 @@ class Headlines extends Component {
     }
 }
 
-const MainComponent = () => {
+class MainComponent extends Component {
 
-    const [state, setState] = React.useState("Main-Page-Guardian");
+    constructor(props) {
+        super(props);
+        this.state = { page: "Main-Page-Guardian" };
+    }
 
-    return (
-        <>
-            <NavigationBar />
-            <div className="main-container">
-                {state === "Main-Page-Guardian" ? (
+    render = () => {
+        if(this.state.page === "Main-Page-Guardian") {
+            return (
                 <>
-                    <Headlines />
-                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
+                    <NavigationBar source={this.state} />
+                    <div className="main-container">
+                        <Headlines />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
+                    </div>
                 </>
-                ) : ( <h3>NY Times</h3> ) }
-            </div>
-        </>
-    );
+            );
+        }
+        else if(this.state.page === "Main-Page-NY") {
+            return (
+                <>
+                    <NavigationBar />
+                    <div className="main-container">
+                        <h3>NY Times</h3>
+                    </div>
+                </>
+            );
+        }
+    }
 }
 
 const HomePage = () => (
