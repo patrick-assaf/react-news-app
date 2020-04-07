@@ -167,12 +167,22 @@ class GuardianHeadlines extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            url: this.props.url,
             articles: []
         }
     }
 
+    componentDidUpdate(state) {
+        if (state.url !== this.props.url) {
+            this.setState({ articles: [] });
+            fetch("http://localhost:5000"+this.props.url)
+            .then(result => result.json())
+            .then(articles => this.setState({url: this.props.url, articles: articles}, () => console.log(this.state)));
+        }
+    }
+
     componentDidMount() {
-        fetch("http://localhost:5000/guardian")
+        fetch("http://localhost:5000"+this.props.url)
             .then(result => result.json())
             .then(articles => this.setState({articles}, () => console.log(this.state)));
     }
@@ -216,12 +226,22 @@ class NYHeadlines extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            url: this.props.url,
             articles: []
         }
     }
 
+    componentDidUpdate(state) {
+        if (state.url !== this.props.url) {
+            this.setState({ articles: [] });
+            fetch("http://localhost:5000"+this.props.url)
+            .then(result => result.json())
+            .then(articles => this.setState({url: this.props.url, articles: articles}, () => console.log(this.state)));
+        }
+    }
+
     componentDidMount() {
-        fetch("http://localhost:5000/nytimes")
+        fetch("http://localhost:5000"+this.props.url)
             .then(result => result.json())
             .then(articles => this.setState({articles}, () => console.log(this.state)));
     }
@@ -283,7 +303,7 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <GuardianHeadlines page={this.state.page} />
+                        <GuardianHeadlines page={this.state.page} url="/guardian" />
                         <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
@@ -294,7 +314,7 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <NYHeadlines page={this.state.page} />
+                        <NYHeadlines page={this.state.page} url="/nytimes" />
                         <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
@@ -305,7 +325,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>World Guardian</h3>
+                        <GuardianHeadlines page={this.state.page} url="/guardian-world" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -315,7 +336,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>World NY</h3>
+                        <NYHeadlines page={this.state.page} url="/nytimes-world" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -325,7 +347,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>Politics Guardian</h3>
+                        <GuardianHeadlines page={this.state.page} url="/guardian-politics" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -335,7 +358,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>Politics NY</h3>
+                        <NYHeadlines page={this.state.page} url="/nytimes-politics" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -345,7 +369,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>Business Guardian</h3>
+                        <GuardianHeadlines page={this.state.page} url="/guardian-business" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -355,7 +380,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>Business NY</h3>
+                        <NYHeadlines page={this.state.page} url="/nytimes-business" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -365,7 +391,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>Technology Guardian</h3>
+                        <GuardianHeadlines page={this.state.page} url="/guardian-technology" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -375,7 +402,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>Technology NY</h3>
+                        <NYHeadlines page={this.state.page} url="/nytimes-technology" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -385,7 +413,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>Sports Guardian</h3>
+                        <GuardianHeadlines page={this.state.page} url="/guardian-sport" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
@@ -395,7 +424,8 @@ class MainComponent extends Component {
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
-                        <h3>Sports NY</h3>
+                        <NYHeadlines page={this.state.page} url="/nytimes-sports" />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
                     </div>
                 </>
             );
