@@ -28,7 +28,7 @@ function dateFormat(date) {
     return date.slice(0, date.search("T"));
 }
 
-app.get('/guardian', (req, res) => {
+app.get('/guardian-home', (req, res) => {
 
     const url = "https://content.guardianapis.com/search?api-key=591a92b9-9797-407f-96ee-41cd7dbb3532&section=(sport|business|technology|politics)&show-blocks=all";
     const default_img = "https://assets.guim.co.uk/images/eada8aa27c12fe2d5afa3a89d3fbae0d/fallback-logo.png";
@@ -265,7 +265,7 @@ function getImage(multimedia) {
     return "none";
 }
 
-app.get('/nytimes', (req, res) => {
+app.get('/nytimes-home', (req, res) => {
 
     const url = "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV";
     const default_img = "https://upload.wikimedia.org/wikipedia/commons/0/0e/Nytimes_hq.jpg";
@@ -440,7 +440,7 @@ app.get('/nytimes-technology', (req, res) => {
         .then(articles => res.json(articles));
 });
 
-app.get('/nytimes-sports', (req, res) => {
+app.get('/nytimes-sport', (req, res) => {
 
     const url = "https://api.nytimes.com/svc/topstories/v2/sports.json?api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV";
     const default_img = "https://upload.wikimedia.org/wikipedia/commons/0/0e/Nytimes_hq.jpg";

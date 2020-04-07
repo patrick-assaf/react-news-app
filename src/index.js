@@ -55,10 +55,10 @@ const SwitchButton = props => {
     const toggleChecked = () => {
         setState((previous) => !previous);
         if(state === false) {
-            props.data.changePage("Guardian-Home");
+            props.data.changePage("/guardian-home");
         }
         else if(state === true) {
-            props.data.changePage("NY-Home");
+            props.data.changePage("/nytimes-home");
         }
     };
 
@@ -82,14 +82,14 @@ const SwitchButton = props => {
 const NavigationBar = props => {
 
     const sectionClicked = (section) => {
-        if(props.data.page === "Guardian-"+section || props.data.page === "NY-"+section) {
+        if(props.data.page === "/guardian-"+section || props.data.page === "/nytimes-"+section) {
             return;
         }
-        else if(props.data.page.slice(0, props.data.page.search("-")) === "Guardian") {
-            props.data.changePage("Guardian-"+section);
+        else if(props.data.page.slice(0, props.data.page.search("-")) === "/guardian") {
+            props.data.changePage("/guardian-"+section);
         }
-        else if(props.data.page.slice(0, props.data.page.search("-")) === "NY") {
-            props.data.changePage("NY-"+section);
+        else if(props.data.page.slice(0, props.data.page.search("-")) === "/nytimes") {
+            props.data.changePage("/nytimes-"+section);
         }
     };
 
@@ -100,12 +100,12 @@ const NavigationBar = props => {
                 <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
             </Form>
             <Nav className="mr-auto">
-            <Nav.Link href="" onClick={() => sectionClicked("Home")} >Home</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("World")} >World</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("Politics")} >Politics</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("Business")} >Business</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("Technology")} >Technology</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("Sports")} >Sports</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("home")} >Home</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("world")} >World</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("politics")} >Politics</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("business")} >Business</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("technology")} >Technology</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("sport")} >Sports</Nav.Link>
             </Nav>
             <Icon inverted color="grey" size="large" name="bookmark outline" />
             <SwitchButton data={props.data} />
@@ -163,66 +163,7 @@ class ArticleCard extends Component {
     }
 }
 
-class GuardianHeadlines extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            url: this.props.url,
-            articles: []
-        }
-    }
-
-    componentDidUpdate(state) {
-        if (state.url !== this.props.url) {
-            this.setState({ articles: [] });
-            fetch("http://localhost:5000"+this.props.url)
-            .then(result => result.json())
-            .then(articles => this.setState({url: this.props.url, articles: articles}, () => console.log(this.state)));
-        }
-    }
-
-    componentDidMount() {
-        fetch("http://localhost:5000"+this.props.url)
-            .then(result => result.json())
-            .then(articles => this.setState({articles}, () => console.log(this.state)));
-    }
-
-    render = () => {
-        const { articles } = this.state;
-        if (articles.length === 0) {
-            return (
-                <>
-                    <div className="bounce-loader">
-                        <BounceLoader
-                            size={60}
-                            color={"#123abc"}
-                            loading={true}
-                        />
-                    </div>
-                    <h4><b>Loading</b></h4>
-                </>
-            );
-        } else {
-            return (
-                <div>
-                    {articles.map((article) =>
-                        <ArticleCard 
-                            key={article.key} 
-                            img_url={article.img} 
-                            title={article.title} 
-                            description={article.description} 
-                            date={article.date} 
-                            section={article.section} 
-                            url={article.url}
-                        />
-                    )}
-                </div>
-            );
-        }
-    }
-}
-
-class NYHeadlines extends Component {
+class Headlines extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -285,7 +226,7 @@ class MainComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { page: "Guardian-Home" };
+        this.state = { page: "/guardian-home" };
     }
 
     changePage(newPage) {
@@ -298,138 +239,16 @@ class MainComponent extends Component {
     }
 
     render = () => {
-        if(this.state.page === "Guardian-Home") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <GuardianHeadlines page={this.state.page} url="/guardian" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "NY-Home") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <NYHeadlines page={this.state.page} url="/nytimes" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "Guardian-World") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <GuardianHeadlines page={this.state.page} url="/guardian-world" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "NY-World") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <NYHeadlines page={this.state.page} url="/nytimes-world" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "Guardian-Politics") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <GuardianHeadlines page={this.state.page} url="/guardian-politics" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "NY-Politics") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <NYHeadlines page={this.state.page} url="/nytimes-politics" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "Guardian-Business") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <GuardianHeadlines page={this.state.page} url="/guardian-business" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "NY-Business") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <NYHeadlines page={this.state.page} url="/nytimes-business" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "Guardian-Technology") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <GuardianHeadlines page={this.state.page} url="/guardian-technology" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "NY-Technology") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <NYHeadlines page={this.state.page} url="/nytimes-technology" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "Guardian-Sports") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <GuardianHeadlines page={this.state.page} url="/guardian-sport" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
-        else if(this.state.page === "NY-Sports") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <NYHeadlines page={this.state.page} url="/nytimes-sports" />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                    </div>
-                </>
-            );
-        }
+
+        return (
+            <>
+                <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                <div className="main-container">
+                    <Headlines page={this.state.page} url={this.state.page} />
+                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
+                </div>
+            </>
+        );
     }
 }
 
