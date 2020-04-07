@@ -49,14 +49,16 @@ const SectionTag = props => (
 );
 
 const SwitchButton = props => {
+
     const [state, setState] = React.useState(true);
+
     const toggleChecked = () => {
         setState((previous) => !previous);
         if(state === false) {
-            props.data.changePage("Main-Page-Guardian");
+            props.data.changePage("Guardian-Home");
         }
         else if(state === true) {
-            props.data.changePage("Main-Page-NY");
+            props.data.changePage("NY-Home");
         }
     };
 
@@ -77,25 +79,40 @@ const SwitchButton = props => {
     );
 }
 
-const NavigationBar = props => (
-    <>
-    <Navbar variant="dark" sticky={true} id="navigation-bar">
-        <Form inline>
-            <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
-        </Form>
-        <Nav className="mr-auto">
-        <Nav.Link href="#home">Home</Nav.Link>
-        <Nav.Link href="#world">World</Nav.Link>
-        <Nav.Link href="#politics">Politics</Nav.Link>
-        <Nav.Link href="#business">Business</Nav.Link>
-        <Nav.Link href="#technology">Technology</Nav.Link>
-        <Nav.Link href="#sports">Sports</Nav.Link>
-        </Nav>
-        <Icon inverted color="grey" size="large" name="bookmark outline" />
-        <SwitchButton data={props.data} />
-    </Navbar>
-    </>
-);
+const NavigationBar = props => {
+
+    const sectionClicked = (section) => {
+        if(props.data.page === "Guardian-"+section || props.data.page === "NY-"+section) {
+            return;
+        }
+        else if(props.data.page.slice(0, props.data.page.search("-")) === "Guardian") {
+            props.data.changePage("Guardian-"+section);
+        }
+        else if(props.data.page.slice(0, props.data.page.search("-")) === "NY") {
+            props.data.changePage("NY-"+section);
+        }
+    };
+
+    return (
+        <>
+        <Navbar variant="dark" sticky={true} id="navigation-bar">
+            <Form inline>
+                <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
+            </Form>
+            <Nav className="mr-auto">
+            <Nav.Link href="" onClick={() => sectionClicked("Home")} >Home</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("World")} >World</Nav.Link>
+            <Nav.Link href="#politics">Politics</Nav.Link>
+            <Nav.Link href="#business">Business</Nav.Link>
+            <Nav.Link href="#technology">Technology</Nav.Link>
+            <Nav.Link href="#sports">Sports</Nav.Link>
+            </Nav>
+            <Icon inverted color="grey" size="large" name="bookmark outline" />
+            <SwitchButton data={props.data} />
+        </Navbar>
+        </>
+    );
+}
 
 const ShareTab = props => (
     <>
@@ -248,7 +265,7 @@ class MainComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { page: "Main-Page-Guardian" };
+        this.state = { page: "Guardian-Home" };
     }
 
     changePage(newPage) {
@@ -261,7 +278,7 @@ class MainComponent extends Component {
     }
 
     render = () => {
-        if(this.state.page === "Main-Page-Guardian") {
+        if(this.state.page === "Guardian-Home") {
             return (
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
@@ -272,13 +289,23 @@ class MainComponent extends Component {
                 </>
             );
         }
-        else if(this.state.page === "Main-Page-NY") {
+        else if(this.state.page === "NY-Home") {
             return (
                 <>
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
                         <NYHeadlines page={this.state.page} />
                         <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "Guardian-World") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>World Guardian</h3>
                     </div>
                 </>
             );
