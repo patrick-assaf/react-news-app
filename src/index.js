@@ -102,10 +102,10 @@ const NavigationBar = props => {
             <Nav className="mr-auto">
             <Nav.Link href="" onClick={() => sectionClicked("Home")} >Home</Nav.Link>
             <Nav.Link href="" onClick={() => sectionClicked("World")} >World</Nav.Link>
-            <Nav.Link href="#politics">Politics</Nav.Link>
-            <Nav.Link href="#business">Business</Nav.Link>
-            <Nav.Link href="#technology">Technology</Nav.Link>
-            <Nav.Link href="#sports">Sports</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("Politics")} >Politics</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("Business")} >Business</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("Technology")} >Technology</Nav.Link>
+            <Nav.Link href="" onClick={() => sectionClicked("Sports")} >Sports</Nav.Link>
             </Nav>
             <Icon inverted color="grey" size="large" name="bookmark outline" />
             <SwitchButton data={props.data} />
@@ -306,6 +306,96 @@ class MainComponent extends Component {
                     <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                     <div className="main-container">
                         <h3>World Guardian</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "NY-World") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>World NY</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "Guardian-Politics") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>Politics Guardian</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "NY-Politics") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>Politics NY</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "Guardian-Business") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>Business Guardian</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "NY-Business") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>Business NY</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "Guardian-Technology") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>Technology Guardian</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "NY-Technology") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>Technology NY</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "Guardian-Sports") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>Sports Guardian</h3>
+                    </div>
+                </>
+            );
+        }
+        else if(this.state.page === "NY-Sports") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <h3>Sports NY</h3>
                     </div>
                 </>
             );
