@@ -40,8 +40,8 @@ const text = {
 const SectionTag = props => (
     <p 
         className="section-tag" 
-        style={colors[props.section] !== undefined ? 
-            { backgroundColor: colors[props.section], color: text[props.section] } : 
+        style={colors[props.section.toLowerCase()] !== undefined ? 
+            { backgroundColor: colors[props.section.toLowerCase()], color: text[props.section.toLowerCase()] } : 
             { backgroundColor: colors['other'], color: text['other'] }}
     ><b>
         {props.section.toUpperCase()}

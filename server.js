@@ -105,15 +105,19 @@ app.get('/:path', (req, res) => {
         })
         .then(articles => res.json(articles));
     }
+
     else if(source === "nytimes"){
         section = (path.slice(8) === "sport") ? "sports" : path.slice(8);
-        url = "https://api.nytimes.com/svc/topstories/v2/"+section+".json?api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV";
+        url = isSectionOrUrl(section) ? 
+        "https://api.nytimes.com/svc/topstories/v2/"+section+".json?api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV" :
+        'https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=web_url:("'+section+'")&api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV';
         default_img = "https://upload.wikimedia.org/wikipedia/commons/0/0e/Nytimes_hq.jpg";
 
-        fetch(url)
+        fetch(encodeURI(url))
         .then(result => result.json())
         .then(data => {
-            data.results.filter((article) => {
+            (isSectionOrUrl(section) ? data.results
+            .filter((article) => {
                 if(isvalid(article.abstract) && isvalid(article.multimedia) && isvalid(article.title)
                 && isvalid(article.published_date) && isvalid(article.section) && isvalid(article.url)) {
                     return true;
@@ -126,15 +130,24 @@ app.get('/:path', (req, res) => {
                 obj[index] = 
                 {
                     key: `${index}`, 
+                    id: `${article.url}`, 
                     img: (`${getImage(article.multimedia)}` !== "none") ? `${getImage(article.multimedia)}` : default_img,
                     title: `${article.title}`,
-                    description: `${cutoff(article.abstract)}`,
+                    description: `${article.abstract}`,
                     date: `${dateFormat(article.published_date)}`,
                     section: `${article.section}`,
-                    url: `${article.url}`,
-                    id: `${article.url}`
+                    url: `${article.url}`
                 }
-            )
+            ) : obj = 
+            {
+                id: `${data.response.docs.web_url}`,
+                img: (`${getImage(data.response.docs[0].multimedia)}` !== "none") ? "https://nyt.com/"+`${getImage(data.response.docs[0].multimedia)}` : default_img,
+                title: `${data.response.docs[0].headline.main}`,
+                description: `${data.response.docs[0].abstract}`,
+                date: `${dateFormat(data.response.docs[0].pub_date)}`,
+                section: `${data.response.docs[0].section_name}`,
+                url: `${data.response.docs[0].web_url}` 
+            })
             return obj;
         })
         .then(articles => res.json(articles));
