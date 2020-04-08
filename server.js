@@ -113,7 +113,7 @@ app.get('/:path', (req, res) => {
         'https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=web_url:("'+section+'")&api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV';
         default_img = "https://upload.wikimedia.org/wikipedia/commons/0/0e/Nytimes_hq.jpg";
 
-        fetch(encodeURI(url))
+        fetch(url)
         .then(result => result.json())
         .then(data => {
             (isSectionOrUrl(section) ? data.results

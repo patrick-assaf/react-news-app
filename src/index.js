@@ -93,6 +93,11 @@ const NavigationBar = props => {
         }
     };
 
+    function isSectionOrUrl(path) {
+        const page = path.slice(props.data.page.search("-")+1);
+        return (page === "home" || page === "world" || page === "politics" || page === "business" || page === "technology" || page === "sport");
+    }
+
     return (
         <>
         <Navbar variant="dark" sticky={true} id="navigation-bar">
@@ -108,7 +113,7 @@ const NavigationBar = props => {
             <Nav.Link href="" onClick={() => sectionClicked("sport")} >Sports</Nav.Link>
             </Nav>
             <Icon inverted color="grey" size="large" name="bookmark outline" />
-            <SwitchButton data={props.data} />
+            {(isSectionOrUrl(props.data.page)) ? <SwitchButton data={props.data} /> : <></>}
         </Navbar>
         </>
     );
