@@ -55,10 +55,10 @@ const SwitchButton = props => {
     const toggleChecked = () => {
         setState((previous) => !previous);
         if(state === false) {
-            props.data.changePage("/guardian-home");
+            props.data.changePage("guardian-home");
         }
         else if(state === true) {
-            props.data.changePage("/nytimes-home");
+            props.data.changePage("nytimes-home");
         }
     };
 
@@ -82,14 +82,14 @@ const SwitchButton = props => {
 const NavigationBar = props => {
 
     const sectionClicked = (section) => {
-        if(props.data.page === "/guardian-"+section || props.data.page === "/nytimes-"+section) {
+        if(props.data.page === "guardian-"+section || props.data.page === "nytimes-"+section) {
             return;
         }
-        else if(props.data.page.slice(0, props.data.page.search("-")) === "/guardian") {
-            props.data.changePage("/guardian-"+section);
+        else if(props.data.page.slice(0, props.data.page.search("-")) === "guardian") {
+            props.data.changePage("guardian-"+section);
         }
-        else if(props.data.page.slice(0, props.data.page.search("-")) === "/nytimes") {
-            props.data.changePage("/nytimes-"+section);
+        else if(props.data.page.slice(0, props.data.page.search("-")) === "nytimes") {
+            props.data.changePage("nytimes-"+section);
         }
     };
 
@@ -163,6 +163,10 @@ class ArticleCard extends Component {
     }
 }
 
+class ExpandedCard extends Component {
+    
+}
+
 class Headlines extends Component {
     constructor(props) {
         super(props);
@@ -175,14 +179,14 @@ class Headlines extends Component {
     componentDidUpdate(state) {
         if (state.url !== this.props.url) {
             this.setState({ articles: [] });
-            fetch("http://localhost:5000"+this.props.url)
+            fetch("http://localhost:5000/"+this.props.url.replace(/\//g, "~"))
             .then(result => result.json())
             .then(articles => this.setState({url: this.props.url, articles: articles}, () => console.log(this.state)));
         }
     }
 
     componentDidMount = () => {
-        fetch("http://localhost:5000"+this.props.url)
+        fetch("http://localhost:5000/"+this.props.url.replace(/\//g, "~"))
             .then(result => result.json())
             .then(articles => this.setState({articles}, () => console.log(this.state)));
     }
@@ -190,7 +194,7 @@ class Headlines extends Component {
     articleClicked(id) {
         const page = this.state.url.slice(0, this.state.url.search("-"));
         console.log(page+"-"+id);
-        this.props.changePage(page+"-article");
+        this.props.changePage(page+"-"+id);
     }
 
     render = () => {
@@ -211,7 +215,7 @@ class Headlines extends Component {
         } else {
             return (
                 <div>
-                    {articles.map((article) =>
+                    {(articles.length > 1) ? articles.map((article) =>
                         <div onClick={() => this.articleClicked(article.id)} key={article.key} >
                             <ArticleCard 
                                 id={article.id}
@@ -223,7 +227,15 @@ class Headlines extends Component {
                                 url={article.url} 
                             />
                         </div>
-                    )}
+                    ) : <ArticleCard 
+                        id={articles.id}
+                        img_url={articles.img} 
+                        title={articles.title} 
+                        description={articles.description} 
+                        date={articles.date} 
+                        section={articles.section} 
+                        url={articles.url} 
+                    />}
                 </div>
             );
         }
@@ -234,7 +246,7 @@ class MainComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { page: "/guardian-home" };
+        this.state = { page: "guardian-home" };
     }
 
     changePage(newPage) {
@@ -247,29 +259,15 @@ class MainComponent extends Component {
     }
 
     render = () => {
-        if(this.state.page.slice(0, this.state.page.search("-")) === "/guardian" || this.state.page.slice(0, this.state.page.search("-")) === "/nytimes") {
-            if(this.state.page === "/guardian-article" || this.state.page === "/nytimes-article") {
-                return (
-                    <>
-                        <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                        <div className="main-container">
-                            <h3>{this.state.page}</h3>
-                        </div>
-                    </>
-                );
-            }
-            else {
-                return (
-                    <>
-                        <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                        <div className="main-container">
-                            <Headlines url={this.state.page} changePage={this.changePage.bind(this)} />
-                            <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                        </div>
-                    </>
-                );
-            }
-        }
+        return (
+            <>
+                <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                <div className="main-container">
+                    <Headlines url={this.state.page} changePage={this.changePage.bind(this)} />
+                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
+                </div>
+            </>
+        );
     }
 }
 

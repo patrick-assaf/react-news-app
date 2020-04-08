@@ -37,9 +37,13 @@ function getImage(multimedia) {
     return "none";
 }
 
+function isSectionOrUrl(path) {
+    return (path === "home" || path === "world" || path === "politics" || path === "business" || path === "technology" || path === "sport");
+}
+
 app.get('/:path', (req, res) => {
 
-    const path = req.params.path;
+    const path = req.params.path.replace(/\~/g, "/");
     const source = path.slice(0, path.search("-"));
     let section = '';
 
@@ -59,7 +63,8 @@ app.get('/:path', (req, res) => {
         fetch(home_url) : fetch(url))
         .then(result => result.json())
         .then(data => {
-            data.response.results.filter((article) => {
+            (isSectionOrUrl(section) ? data.response.results
+            .filter((article) => {
                 if(isvalid(article.blocks.body[0].bodyTextSummary) && isvalid(article.blocks.main)
                 && isvalid(article.webTitle) && isvalid(article.webPublicationDate) && isvalid(article.sectionId)
                 && isvalid(article.webUrl)) {
@@ -68,7 +73,7 @@ app.get('/:path', (req, res) => {
                 else {
                     return false;
                 }
-            })
+            }) 
             .map((article, index) =>
                 obj[index] = 
                 {
@@ -83,7 +88,19 @@ app.get('/:path', (req, res) => {
                     section: `${article.sectionId}`,
                     url: `${article.webUrl}`
                 }
-            )
+            ) 
+            : obj = 
+            {
+                id: `${data.response.content.id}`,
+                img: (data.response.content.blocks.main.elements[0].assets.length !== 0) ? 
+                    `${data.response.content.blocks.main.elements[0].assets[data.response.content.blocks.main.elements[0].assets.length-1].file}`
+                    : default_img,
+                title: `${data.response.content.webTitle}`,
+                description: `${data.response.content.blocks.body[0].bodyTextSummary}`,
+                date: `${dateFormat(data.response.content.webPublicationDate)}`,
+                section: `${data.response.content.sectionId}`,
+                url: `${data.response.content.webUrl}`
+            })
             return obj;
         })
         .then(articles => res.json(articles));
