@@ -37,9 +37,9 @@ function getImage(multimedia) {
     return "none";
 }
 
-app.get('/:section', (req, res) => {
+app.get('/:path', (req, res) => {
 
-    const path = req.params.section;
+    const path = req.params.path;
     const source = path.slice(0, path.search("-"));
     let section = '';
 
@@ -73,6 +73,7 @@ app.get('/:section', (req, res) => {
                 obj[index] = 
                 {
                     key: `${index}`, 
+                    id: `${article.id}`,
                     img: (article.blocks.main.elements[0].assets.length !== 0) ? 
                         `${article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file}`
                         : default_img,
@@ -113,7 +114,8 @@ app.get('/:section', (req, res) => {
                     description: `${cutoff(article.abstract)}`,
                     date: `${dateFormat(article.published_date)}`,
                     section: `${article.section}`,
-                    url: `${article.url}`
+                    url: `${article.url}`,
+                    id: `${article.url}`
                 }
             )
             return obj;

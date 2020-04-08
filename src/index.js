@@ -181,10 +181,16 @@ class Headlines extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         fetch("http://localhost:5000"+this.props.url)
             .then(result => result.json())
             .then(articles => this.setState({articles}, () => console.log(this.state)));
+    }
+
+    articleClicked(id) {
+        const page = this.state.url.slice(0, this.state.url.search("-"));
+        console.log(page+"-"+id);
+        this.props.changePage(page+"-article");
     }
 
     render = () => {
@@ -206,15 +212,17 @@ class Headlines extends Component {
             return (
                 <div>
                     {articles.map((article) =>
-                        <ArticleCard 
-                            key={article.key} 
-                            img_url={article.img} 
-                            title={article.title} 
-                            description={article.description} 
-                            date={article.date} 
-                            section={article.section} 
-                            url={article.url}
-                        />
+                        <div onClick={() => this.articleClicked(article.id)} key={article.key} >
+                            <ArticleCard 
+                                id={article.id}
+                                img_url={article.img} 
+                                title={article.title} 
+                                description={article.description} 
+                                date={article.date} 
+                                section={article.section} 
+                                url={article.url} 
+                            />
+                        </div>
                     )}
                 </div>
             );
@@ -239,16 +247,29 @@ class MainComponent extends Component {
     }
 
     render = () => {
-
-        return (
-            <>
-                <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                <div className="main-container">
-                    <Headlines page={this.state.page} url={this.state.page} />
-                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
-                </div>
-            </>
-        );
+        if(this.state.page.slice(0, this.state.page.search("-")) === "/guardian" || this.state.page.slice(0, this.state.page.search("-")) === "/nytimes") {
+            if(this.state.page === "/guardian-article" || this.state.page === "/nytimes-article") {
+                return (
+                    <>
+                        <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                        <div className="main-container">
+                            <h3>{this.state.page}</h3>
+                        </div>
+                    </>
+                );
+            }
+            else {
+                return (
+                    <>
+                        <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                        <div className="main-container">
+                            <Headlines url={this.state.page} changePage={this.changePage.bind(this)} />
+                            <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
+                        </div>
+                    </>
+                );
+            }
+        }
     }
 }
 
