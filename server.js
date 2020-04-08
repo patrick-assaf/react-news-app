@@ -38,7 +38,7 @@ function getImage(multimedia) {
 }
 
 function isSectionOrUrl(path) {
-    return (path === "home" || path === "world" || path === "politics" || path === "business" || path === "technology" || path === "sport");
+    return (path === "home" || path === "world" || path === "politics" || path === "business" || path === "technology" || path === "sport" || path === "sports");
 }
 
 app.get('/:path', (req, res) => {
@@ -112,6 +112,8 @@ app.get('/:path', (req, res) => {
         "https://api.nytimes.com/svc/topstories/v2/"+section+".json?api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV" :
         'https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=web_url:("'+section+'")&api-key=ncX4WsHBu6ysmDaLZAGYCYfrnVgt4XQV';
         default_img = "https://upload.wikimedia.org/wikipedia/commons/0/0e/Nytimes_hq.jpg";
+
+        console.log(section);
 
         fetch(url)
         .then(result => result.json())

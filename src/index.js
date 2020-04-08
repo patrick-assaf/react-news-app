@@ -21,6 +21,7 @@ const colors = {
     business: '#4696EC',
     technology: '#CEDC3A',
     sport: '#F7C244',
+    sports: '#F7C244',
     other: '#6E757B',
     guardian: '#14284A',
     nytimes: '#DDDDDD'
@@ -32,6 +33,7 @@ const text = {
     business: 'white',
     technology: 'black',
     sport: 'black',
+    sports: 'black',
     other: 'white',
     guardian: 'white',
     nytimes: 'black'
@@ -95,7 +97,7 @@ const NavigationBar = props => {
 
     function isSectionOrUrl(path) {
         const page = path.slice(props.data.page.search("-")+1);
-        return (page === "home" || page === "world" || page === "politics" || page === "business" || page === "technology" || page === "sport");
+        return (page === "home" || page === "world" || page === "politics" || page === "business" || page === "technology" || page === "sport" || page === "sports");
     }
 
     return (
@@ -198,7 +200,6 @@ class Headlines extends Component {
 
     articleClicked(id) {
         const page = this.state.url.slice(0, this.state.url.search("-"));
-        console.log(page+"-"+id);
         this.props.changePage(page+"-"+id);
     }
 
