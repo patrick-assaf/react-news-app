@@ -60,7 +60,7 @@ app.get('/:section', (req, res) => {
         .then(result => result.json())
         .then(data => {
             data.response.results.filter((article) => {
-                if(isvalid(article.blocks.body[0].bodyTextSummary) && isvalid(article.blocks.main.elements[0].assets)
+                if(isvalid(article.blocks.body[0].bodyTextSummary) && isvalid(article.blocks.main)
                 && isvalid(article.webTitle) && isvalid(article.webPublicationDate) && isvalid(article.sectionId)
                 && isvalid(article.webUrl)) {
                     return true;
