@@ -41,6 +41,8 @@ const text = {
     nytimes: 'black'
 }
 
+let bookmark = {};
+
 const SectionTag = props => (
     <p 
         className="section-tag" 
@@ -140,6 +142,12 @@ const ShareTab = props => (
     </>
 );
 
+const BookmarkNotification = props => (
+    <>
+        <h5>{props.message} - {props.title}</h5>
+    </>
+);
+
 class ArticleCard extends Component {
 
     constructor(props) {
@@ -175,10 +183,25 @@ class ExpandedCard extends Component {
     constructor(props) {
         super(props);
         this.share = this.share.bind(this);
+        this.state = { bookmarked: (this.props.id in bookmark) };
     }
     
     share() {
-        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "share-tab" });
+        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab" });
+    }
+
+    bookmark(id) {
+        if(id in bookmark) {
+            delete bookmark[id];
+            console.log(bookmark);
+            toast(<BookmarkNotification message={"Removing"} title={this.props.title} />, { className: "notification-tab", autoClose: 3000 });
+        }
+        else {
+            bookmark[id] = 1;
+            console.log(bookmark);
+            toast(<BookmarkNotification message={"Saving"} title={this.props.title} />, { className: "notification-tab", autoClose: 3000 });
+        }
+        this.setState({ bookmarked: this.state.bookmarked ? false : true });
     }
 
     render () {
@@ -198,7 +221,14 @@ class ExpandedCard extends Component {
                         <EmailShareButton url={this.props.url} subject="CSCI_571_NewsApp" data-tip="Email" className="card-buttons">
                             <EmailIcon round={true} size={30} />
                         </EmailShareButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Icon color="red" size="large" name="bookmark outline" data-tip="Bookmark" className="card-buttons"/>
+                        <Icon 
+                            color="red" 
+                            size="large" 
+                            name={this.state.bookmarked ? "bookmark" : "bookmark outline"} 
+                            data-tip="Bookmark" 
+                            className="card-buttons" 
+                            onClick={() => this.bookmark(this.props.id)}
+                        />
                     </div>
                     <Card.Img variant="bottom" src={this.props.img_url} />
                     <Card.Text>{this.props.description}</Card.Text>
@@ -304,7 +334,7 @@ class MainComponent extends Component {
                 <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
                 <div className="main-container">
                     <Headlines url={this.state.page} changePage={this.changePage.bind(this)} />
-                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} />
+                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
                 </div>
             </>
         );
