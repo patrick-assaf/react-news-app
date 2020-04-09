@@ -113,3 +113,21 @@ html, body {
 .share-button:focus {
     outline: none;
 }
+
+.card-bootstrap {
+    border-radius: 4px 4px 4px 4px;
+    text-align: left;
+    background-color: white;
+    border: solid;
+    border-width: thin;
+    border-color: rgb(220, 220, 220);
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card-buttons {
+    float: right;
+}

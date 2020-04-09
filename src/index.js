@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
+import Card from 'react-bootstrap/Card';
 import { Icon, Input } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { EmailShareButton, FacebookShareButton, TwitterShareButton } from "react-share";
 import { EmailIcon, FacebookIcon, TwitterIcon } from "react-share";
 import BounceLoader from "react-spinners/BounceLoader";
+import ReactTooltip from 'react-tooltip';
 import './index.css';
 
 const colors = {
@@ -52,7 +54,7 @@ const SectionTag = props => (
 
 const SwitchButton = props => {
 
-    const [state, setState] = React.useState(true);
+    const [state, setState] = React.useState( (props.data.page.search("-") === "guardian") ? false : true );
 
     const toggleChecked = () => {
         setState((previous) => !previous);
@@ -171,7 +173,39 @@ class ArticleCard extends Component {
 }
 
 class ExpandedCard extends Component {
+    constructor(props) {
+        super(props);
+        this.share = this.share.bind(this);
+    }
     
+    share() {
+        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "share-tab" });
+    }
+
+    render () {
+        return (
+            <Card className="card-bootstrap">
+                <Card.Body>
+                    <Card.Text><h1><b>{this.props.title}</b></h1></Card.Text>
+                    <Card.Text className="date-tag"><h3><i>{this.props.date}</i></h3></Card.Text>
+                    <div className="card-buttons">
+                        <ReactTooltip  effect="solid"/>
+                        <FacebookShareButton hashtag="#CSCI_571_NewsApp" url={this.props.url} data-tip="Facebook">
+                            <FacebookIcon round={true} size={30} />
+                        </FacebookShareButton>
+                        <TwitterShareButton url={this.props.url} hashtags={["CSCI_571_NewsApp"]} data-tip="Twitter">
+                            <TwitterIcon round={true} size={30} />
+                        </TwitterShareButton>
+                        <EmailShareButton url={this.props.url} subject="CSCI_571_NewsApp" data-tip="Email">
+                            <EmailIcon round={true} size={30} />
+                        </EmailShareButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Icon color="red" size="large" name="bookmark outline" data-tip="Bookmark"/>
+                    </div>
+                    <Card.Img variant="bottom" src={this.props.img_url} />
+                </Card.Body>
+            </Card>
+        );
+    }
 }
 
 class Headlines extends Component {
@@ -233,15 +267,15 @@ class Headlines extends Component {
                                 url={article.url} 
                             />
                         </div>
-                    ) : <ArticleCard 
-                        id={articles.id}
-                        img_url={articles.img} 
-                        title={articles.title} 
-                        description={articles.description} 
-                        date={articles.date} 
-                        section={articles.section} 
-                        url={articles.url} 
-                    />}
+                    ) : <ExpandedCard 
+                            id={articles.id}
+                            img_url={articles.img} 
+                            title={articles.title} 
+                            description={articles.description} 
+                            date={articles.date} 
+                            section={articles.section} 
+                            url={articles.url} 
+                        />}
                 </div>
             );
         }
