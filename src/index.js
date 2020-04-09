@@ -54,7 +54,7 @@ const SectionTag = props => (
 
 const SwitchButton = props => {
 
-    const [state, setState] = React.useState( (props.data.page.search("-") === "guardian") ? false : true );
+    const [state, setState] = React.useState( props.data.page.slice(0, props.data.page.search("-")) === "guardian" ? true : false );
 
     const toggleChecked = () => {
         setState((previous) => !previous);
@@ -188,18 +188,18 @@ class ExpandedCard extends Component {
                 <Card.Body>
                     <Card.Text><h1><b>{this.props.title}</b></h1></Card.Text>
                     <Card.Text className="date-tag"><h3><i>{this.props.date}</i></h3></Card.Text>
-                    <div className="card-buttons">
+                    <div className="card-buttons-row">
                         <ReactTooltip  effect="solid"/>
-                        <FacebookShareButton hashtag="#CSCI_571_NewsApp" url={this.props.url} data-tip="Facebook">
+                        <FacebookShareButton hashtag="#CSCI_571_NewsApp" url={this.props.url} data-tip="Facebook" className="card-buttons">
                             <FacebookIcon round={true} size={30} />
                         </FacebookShareButton>
-                        <TwitterShareButton url={this.props.url} hashtags={["CSCI_571_NewsApp"]} data-tip="Twitter">
+                        <TwitterShareButton url={this.props.url} hashtags={["CSCI_571_NewsApp"]} data-tip="Twitter" className="card-buttons">
                             <TwitterIcon round={true} size={30} />
                         </TwitterShareButton>
-                        <EmailShareButton url={this.props.url} subject="CSCI_571_NewsApp" data-tip="Email">
+                        <EmailShareButton url={this.props.url} subject="CSCI_571_NewsApp" data-tip="Email" className="card-buttons">
                             <EmailIcon round={true} size={30} />
                         </EmailShareButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Icon color="red" size="large" name="bookmark outline" data-tip="Bookmark"/>
+                        <Icon color="red" size="large" name="bookmark outline" data-tip="Bookmark" className="card-buttons"/>
                     </div>
                     <Card.Img variant="bottom" src={this.props.img_url} />
                 </Card.Body>
