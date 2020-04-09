@@ -321,11 +321,6 @@ class MainComponent extends Component {
 
     changePage(newPage) {
         this.setState({ page: newPage });
-        this.forceUpdateHandler();
-    }
-
-    forceUpdateHandler() {
-        this.forceUpdate();
     }
 
     render = () => {
