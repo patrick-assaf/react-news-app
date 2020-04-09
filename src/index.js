@@ -147,27 +147,26 @@ class ArticleCard extends Component {
         this.share = this.share.bind(this);
     }
     
-    share() {
+    share(e) {
+        e.stopPropagation();
         toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "share-tab" });
     }
 
     render () {
         return (
-            <div className="card-row">
-                <div className="headline-card">
-                    <Image src={this.props.img_url} thumbnail />
-                    <div className="headline-container">
-                        <div className="title-container">
-                            <h5 className="article-title"><b>{this.props.title}</b></h5>
-                            <Icon name="share alternate" onClick={this.share} />
-                        </div>
-                        <p>{this.props.description}...</p>
-                        <div className="bottom-card-info">
-                            <p className="date-tag"><i>{this.props.date}</i></p><SectionTag section={this.props.section} />
-                        </div>
+            <Card className="headline-card">
+                <Card.Body>
+                    <Image src={this.props.img_url} thumbnail className="headline-card-img"/>
+                    <div className="title-container">
+                        <Card.Title className="article-title"><h5><b>{this.props.title}</b></h5></Card.Title>
+                        <Icon name="share alternate" onClick={(e) => this.share(e)} />
                     </div>
-                </div>
-            </div>
+                    <Card.Text>{this.props.description}...</Card.Text>
+                    <div className="bottom-card-info">
+                        <Card.Text className="date-tag"><i>{this.props.date}</i></Card.Text><SectionTag section={this.props.section} />
+                    </div>
+                </Card.Body>
+            </Card>
         );
     }
 }
@@ -184,7 +183,7 @@ class ExpandedCard extends Component {
 
     render () {
         return (
-            <Card className="card-bootstrap">
+            <Card className="card-details">
                 <Card.Body>
                     <Card.Title><h1><b>{this.props.title}</b></h1></Card.Title>
                     <Card.Title className="date-tag"><h3><i>{this.props.date}</i></h3></Card.Title>

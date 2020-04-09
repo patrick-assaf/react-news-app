@@ -32,16 +32,11 @@ html, body {
     text-align: center;
     margin: 0 auto;
     display: table;
-    border-spacing: 0px 10px;
-}
-
-.card-row {
-    display: table-row;
+    border-spacing: 0px 20px;
 }
 
 .headline-card {
     transition: 0.3s;
-    height: 240px;
     border-radius: 4px 4px 4px 4px;
     text-align: left;
     background-color: white;
@@ -58,21 +53,12 @@ html, body {
     cursor: pointer;
 }
 
-.headline-card img {
+.headline-card-img {
     height: 200px;
     width: 300px;
     object-fit: cover;
     float: left;
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-}
-
-.headline-container {
-    padding: 20px 16px;
-    height: 80px;
-    min-width: 1400px;
+    margin-right: 10px;
 }
 
 .bottom-card-info {
@@ -114,7 +100,7 @@ html, body {
     outline: none;
 }
 
-.card-bootstrap {
+.card-details {
     border-radius: 4px 4px 4px 4px;
     text-align: left;
     background-color: white;
