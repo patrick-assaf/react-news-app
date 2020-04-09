@@ -140,7 +140,7 @@ app.get('/:path', (req, res) => {
                 }
             ) : obj = 
                 {
-                    id: `${data.response.docs.web_url}`,
+                    id: `${data.response.docs[0].web_url}`,
                     img: (`${getImage(data.response.docs[0].multimedia)}` !== "none") ? "https://nyt.com/"+`${getImage(data.response.docs[0].multimedia)}` : default_img,
                     title: `${data.response.docs[0].headline.main}`,
                     description: `${data.response.docs[0].abstract}`,
