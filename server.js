@@ -90,17 +90,17 @@ app.get('/:path', (req, res) => {
                 }
             ) 
             : obj = 
-            {
-                id: `${data.response.content.id}`,
-                img: (data.response.content.blocks.main.elements[0].assets.length !== 0) ? 
-                    `${data.response.content.blocks.main.elements[0].assets[data.response.content.blocks.main.elements[0].assets.length-1].file}`
-                    : default_img,
-                title: `${data.response.content.webTitle}`,
-                description: `${data.response.content.blocks.body[0].bodyTextSummary}`,
-                date: `${dateFormat(data.response.content.webPublicationDate)}`,
-                section: `${data.response.content.sectionId}`,
-                url: `${data.response.content.webUrl}`
-            })
+                {
+                    id: `${data.response.content.id}`,
+                    img: (data.response.content.blocks.main.elements[0].assets.length !== 0) ? 
+                        `${data.response.content.blocks.main.elements[0].assets[data.response.content.blocks.main.elements[0].assets.length-1].file}`
+                        : default_img,
+                    title: `${data.response.content.webTitle}`,
+                    description: `${data.response.content.blocks.body[0].bodyTextSummary}`,
+                    date: `${dateFormat(data.response.content.webPublicationDate)}`,
+                    section: `${data.response.content.sectionId}`,
+                    url: `${data.response.content.webUrl}`
+                })
             return obj;
         })
         .then(articles => res.json(articles));
@@ -139,15 +139,15 @@ app.get('/:path', (req, res) => {
                     url: `${article.url}`
                 }
             ) : obj = 
-            {
-                id: `${data.response.docs.web_url}`,
-                img: (`${getImage(data.response.docs[0].multimedia)}` !== "none") ? "https://nyt.com/"+`${getImage(data.response.docs[0].multimedia)}` : default_img,
-                title: `${data.response.docs[0].headline.main}`,
-                description: `${data.response.docs[0].abstract}`,
-                date: `${dateFormat(data.response.docs[0].pub_date)}`,
-                section: `${data.response.docs[0].section_name}`,
-                url: `${data.response.docs[0].web_url}` 
-            })
+                {
+                    id: `${data.response.docs.web_url}`,
+                    img: (`${getImage(data.response.docs[0].multimedia)}` !== "none") ? "https://nyt.com/"+`${getImage(data.response.docs[0].multimedia)}` : default_img,
+                    title: `${data.response.docs[0].headline.main}`,
+                    description: `${data.response.docs[0].abstract}`,
+                    date: `${dateFormat(data.response.docs[0].pub_date)}`,
+                    section: `${data.response.docs[0].section_name}`,
+                    url: `${data.response.docs[0].web_url}` 
+                })
             return obj;
         })
         .then(articles => res.json(articles));

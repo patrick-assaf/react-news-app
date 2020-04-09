@@ -186,8 +186,8 @@ class ExpandedCard extends Component {
         return (
             <Card className="card-bootstrap">
                 <Card.Body>
-                    <Card.Text><h1><b>{this.props.title}</b></h1></Card.Text>
-                    <Card.Text className="date-tag"><h3><i>{this.props.date}</i></h3></Card.Text>
+                    <Card.Title><h1><b>{this.props.title}</b></h1></Card.Title>
+                    <Card.Title className="date-tag"><h3><i>{this.props.date}</i></h3></Card.Title>
                     <div className="card-buttons-row">
                         <ReactTooltip  effect="solid"/>
                         <FacebookShareButton hashtag="#CSCI_571_NewsApp" url={this.props.url} data-tip="Facebook" className="card-buttons">
@@ -202,6 +202,7 @@ class ExpandedCard extends Component {
                         <Icon color="red" size="large" name="bookmark outline" data-tip="Bookmark" className="card-buttons"/>
                     </div>
                     <Card.Img variant="bottom" src={this.props.img_url} />
+                    <Card.Text>{this.props.description}</Card.Text>
                 </Card.Body>
             </Card>
         );
