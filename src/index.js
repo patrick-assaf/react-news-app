@@ -15,6 +15,7 @@ import { EmailIcon, FacebookIcon, TwitterIcon } from "react-share";
 import BounceLoader from "react-spinners/BounceLoader";
 import ReactTooltip from 'react-tooltip';
 import Truncate from 'react-truncate';
+import { animateScroll as scroll } from 'react-scroll';
 import './index.css';
 
 const colors = {
@@ -185,6 +186,7 @@ class TruncatedDescription extends Component {
 
     showMoreOrLess() {
         this.setState({ truncated: !this.state.truncated });
+        if(this.state.truncated) { scroll.scrollToBottom(); }
     }
 
     render () {
