@@ -355,15 +355,18 @@ class Headlines extends Component {
     }
 }
 
+let storedPage = JSON.parse(localStorage.getItem('page')) ? JSON.parse(localStorage.getItem('page')) : "guardian-home";
+
 class MainComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { page: "guardian-home" };
+        this.state = { page: storedPage };
     }
 
     changePage(newPage) {
         this.setState({ page: newPage });
+        localStorage.setItem('page', JSON.stringify(newPage));
     }
 
     render = () => {
