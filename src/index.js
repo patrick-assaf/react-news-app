@@ -177,6 +177,35 @@ class ArticleCard extends Component {
     }
 }
 
+class TruncatedDescription extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { truncated: true };
+    }
+
+    showMoreOrLess() {
+        this.setState({ truncated: !this.state.truncated });
+    }
+
+    render () {
+        if(this.state.truncated) {
+            return (
+                <Truncate lines={6} ellipsis={<Icon color="black" size="large" name="angle down" className="elipsis-icon" onClick={() => this.showMoreOrLess()}/>}>
+                    {this.props.description}
+                </Truncate>
+            );
+        }
+        else {
+            return (
+                <>
+                    {this.props.description}
+                    <Icon color="black" size="large" name="angle up" className="elipsis-icon" onClick={() => this.showMoreOrLess()}/>
+                </>
+            );
+        }
+    }
+}
+
 class ExpandedCard extends Component {
     constructor(props) {
         super(props);
@@ -229,7 +258,9 @@ class ExpandedCard extends Component {
                         />
                     </div>
                     <Card.Img variant="bottom" src={this.props.img_url} />
-                    <Card.Text>{this.props.description}</Card.Text>
+                    <Card.Text>
+                        <TruncatedDescription description={this.props.description} />
+                    </Card.Text>
                 </Card.Body>
             </Card>
         );

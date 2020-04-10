@@ -126,3 +126,11 @@ html, body {
 .card-buttons:focus {
     outline: none;
 }
+
+.elipsis-icon {
+    float: right;
+}
+
+.elipsis-icon:hover {
+    cursor: pointer;
+}
