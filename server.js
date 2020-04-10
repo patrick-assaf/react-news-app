@@ -11,19 +11,6 @@ function isvalid(value) {
     return (value !== null && value !== '' && value !== undefined);
 }
 
-function cutoff(string) {
-    let char = 510;
-    if(string.length <= 510) {
-        return string;
-    }
-    else {
-        while(string[char] !== ' ' && char < 520) {
-            char += 1;
-        }
-        return string.substring(0, char);
-    }
-}
-
 function dateFormat(date) {
     return date.slice(0, date.search("T"));
 }
@@ -83,7 +70,7 @@ app.get('/:path', (req, res) => {
                         `${article.blocks.main.elements[0].assets[article.blocks.main.elements[0].assets.length-1].file}`
                         : default_img,
                     title: `${article.webTitle}`,
-                    description: `${cutoff(article.blocks.body[0].bodyTextSummary)}`,
+                    description: `${article.blocks.body[0].bodyTextSummary}`,
                     date: `${dateFormat(article.webPublicationDate)}`,
                     section: `${article.sectionId}`,
                     url: `${article.webUrl}`

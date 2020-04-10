@@ -14,6 +14,7 @@ import { EmailShareButton, FacebookShareButton, TwitterShareButton } from "react
 import { EmailIcon, FacebookIcon, TwitterIcon } from "react-share";
 import BounceLoader from "react-spinners/BounceLoader";
 import ReactTooltip from 'react-tooltip';
+import Truncate from 'react-truncate';
 import './index.css';
 
 const colors = {
@@ -154,19 +155,19 @@ class ArticleCard extends Component {
     
     share(e) {
         e.stopPropagation();
-        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "share-tab" });
+        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab" });
     }
 
     render () {
         return (
             <Card className="headline-card">
-                <Card.Body>
-                    <Image src={this.props.img_url} thumbnail className="headline-card-img"/>
+                <Image src={this.props.img_url} thumbnail className="headline-card-img"/>
+                <Card.Body className="headline-container">
                     <div className="title-container">
                         <Card.Title className="article-title"><h5><b>{this.props.title}</b></h5></Card.Title>
                         <Icon name="share alternate" onClick={(e) => this.share(e)} />
                     </div>
-                    <Card.Text>{this.props.description}...</Card.Text>
+                    <Card.Text><Truncate lines={3}>{this.props.description}</Truncate></Card.Text>
                     <div className="bottom-card-info">
                         <Card.Text className="date-tag"><i>{this.props.date}</i></Card.Text><SectionTag section={this.props.section} />
                     </div>
