@@ -16,6 +16,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import ReactTooltip from 'react-tooltip';
 import Truncate from 'react-truncate';
 import { animateScroll as scroll } from 'react-scroll';
+import commentBox from 'commentbox.io';
 import './index.css';
 
 const colors = {
@@ -233,8 +234,17 @@ class ExpandedCard extends Component {
         this.setState({ bookmarked: this.state.bookmarked ? false : true });
     }
 
+    componentDidMount() {
+        this.removeCommentBox = commentBox('5680080743301120-proj');
+    }
+
+    componentWillUnmount() {
+        this.removeCommentBox();
+    }
+
     render () {
         return (
+            <>
             <Card className="card-details">
                 <Card.Body>
                     <Card.Title><h1><b>{this.props.title}</b></h1></Card.Title>
@@ -265,6 +275,8 @@ class ExpandedCard extends Component {
                     </Card.Text>
                 </Card.Body>
             </Card>
+            <div className="commentbox" id={this.props.id}></div>
+            </>
         );
     }
 }
