@@ -8,7 +8,7 @@ html, body {
 }
 
 .search-text-box {
-    width: 280px;
+    width: 20%;
 }
 
 #navigation-bar {
@@ -21,10 +21,10 @@ html, body {
 }
 
 .bounce-loader {
-    margin-top: 250px;
-    display: flex;
-    justify-content: center;
-    justify-items: center;
+    position: absolute;
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .main-container {

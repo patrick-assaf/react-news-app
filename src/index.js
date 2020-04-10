@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import Switch from "react-switch";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import { Icon, Input } from 'semantic-ui-react';
@@ -107,9 +106,7 @@ const NavigationBar = props => {
     return (
         <>
         <Navbar variant="dark" sticky={true} id="navigation-bar">
-            <Form inline>
-                <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
-            </Form>
+            <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
             <Nav className="mr-auto">
             <Nav.Link href="" onClick={() => sectionClicked("home")} >Home</Nav.Link>
             <Nav.Link href="" onClick={() => sectionClicked("world")} >World</Nav.Link>
@@ -278,8 +275,8 @@ class Headlines extends Component {
                             color={"#123abc"}
                             loading={true}
                         />
+                        <h4><b>Loading</b></h4>
                     </div>
-                    <h4><b>Loading</b></h4>
                 </>
             );
         } else {
