@@ -51,7 +51,7 @@ html, body {
     grid-template-columns: max-content auto;
 }
 
-.headline-card:hover {
+.headline-card:hover, .deck-cards:hover {
     cursor: pointer;
 }
 
@@ -73,7 +73,7 @@ html, body {
 .section-tag {
     border-radius: 5px 5px 5px 5px;
     text-align: center;
-    margin: 0 auto;
+    margin-left: 10px;
     float: right;
     padding: 2px 5px 2px 5px;
 }
@@ -145,7 +145,7 @@ html, body {
 }
 
 .deck-cards {
-    max-width: 300px;
+    max-width: 330px;
     transition: 0.3s;
     border-radius: 4px 4px 4px 4px;
     text-align: left;

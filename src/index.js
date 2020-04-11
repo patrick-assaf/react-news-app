@@ -313,8 +313,8 @@ class Favorites extends Component {
         toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab" });
     }
 
-    articleClicked(id) {
-        this.props.changePage(id);
+    articleClicked(url) {
+        this.props.changePage(url);
     }
 
     render = () => {
