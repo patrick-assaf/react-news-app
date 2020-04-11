@@ -106,17 +106,21 @@ const NavigationBar = props => {
         return (page === "home" || page === "world" || page === "politics" || page === "business" || page === "technology" || page === "sport" || page === "sports");
     }
 
+    function isPageSelected(page) {
+        return props.data.page.slice(props.data.page.search("-")+1) === page ? "white" : "";
+    }
+
     return (
         <>
         <Navbar variant="dark" sticky={true} id="navigation-bar">
             <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
             <Nav className="mr-auto">
-            <Nav.Link href="" onClick={() => sectionClicked("home")} >Home</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("world")} >World</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("politics")} >Politics</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("business")} >Business</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("technology")} >Technology</Nav.Link>
-            <Nav.Link href="" onClick={() => sectionClicked("sport")} >Sports</Nav.Link>
+            <Nav.Link style={{ color: isPageSelected("home") }} href="" onClick={() => sectionClicked("home")} >Home</Nav.Link>
+            <Nav.Link style={{ color: isPageSelected("world") }} href="" onClick={() => sectionClicked("world")} >World</Nav.Link>
+            <Nav.Link style={{ color: isPageSelected("politics") }} href="" onClick={() => sectionClicked("politics")} >Politics</Nav.Link>
+            <Nav.Link style={{ color: isPageSelected("business") }} href="" onClick={() => sectionClicked("business")} >Business</Nav.Link>
+            <Nav.Link style={{ color: isPageSelected("technology") }} href="" onClick={() => sectionClicked("technology")} >Technology</Nav.Link>
+            <Nav.Link style={{ color: isPageSelected("sport") }} href="" onClick={() => sectionClicked("sport")} >Sports</Nav.Link>
             </Nav>
             <Icon inverted color="grey" size="large" name="bookmark outline" />
             {(isSectionOrUrl(props.data.page)) ? <SwitchButton data={props.data} /> : <></>}
