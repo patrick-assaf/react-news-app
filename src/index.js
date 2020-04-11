@@ -122,7 +122,13 @@ const NavigationBar = props => {
             <Nav.Link style={{ color: isPageSelected("technology") }} href="" onClick={() => sectionClicked("technology")} >Technology</Nav.Link>
             <Nav.Link style={{ color: isPageSelected("sport") }} href="" onClick={() => sectionClicked("sport")} >Sports</Nav.Link>
             </Nav>
-            <Icon inverted color="grey" size="large" name="bookmark outline" />
+            <Icon 
+                inverted color="grey" 
+                size="large" 
+                name={props.data.page.slice(props.data.page.search("-")+1) === "favorites" ? "bookmark" : "bookmark outline"} 
+                className="bookmark-icon" 
+                onClick={() => sectionClicked("favorites")} 
+            />
             {(isSectionOrUrl(props.data.page)) ? <SwitchButton data={props.data} /> : <></>}
         </Navbar>
         </>
@@ -285,6 +291,17 @@ class ExpandedCard extends Component {
     }
 }
 
+class Favorites extends Component {
+
+    render () {
+        return (
+            <>
+                <h3 className="favorites-title"><b>Favorites</b></h3>
+            </>
+        );
+    }
+}
+
 class Headlines extends Component {
     constructor(props) {
         super(props);
@@ -374,15 +391,28 @@ class MainComponent extends Component {
     }
 
     render = () => {
-        return (
-            <>
-                <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                <div className="main-container">
-                    <Headlines url={this.state.page} changePage={this.changePage.bind(this)} />
-                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
-                </div>
-            </>
-        );
+        if(this.state.page.slice(this.state.page.search("-")+1) === "favorites") {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <Favorites url={this.state.page} changePage={this.changePage.bind(this)} />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
+                    </div>
+                </>
+            );
+        }
+        else {
+            return (
+                <>
+                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                    <div className="main-container">
+                        <Headlines url={this.state.page} changePage={this.changePage.bind(this)} />
+                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
+                    </div>
+                </>
+            );
+        }
     }
 }
 
