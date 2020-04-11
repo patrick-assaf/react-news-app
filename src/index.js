@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
+import CardDeck from 'react-bootstrap/CardDeck';
 import { Icon, Input } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -43,7 +44,7 @@ const text = {
     nytimes: 'black'
 }
 
-let bookmark = {};
+let bookmark = JSON.parse(localStorage.getItem('bookmark')) ? JSON.parse(localStorage.getItem('bookmark')) : {};
 
 const SectionTag = props => (
     <p 
@@ -234,11 +235,20 @@ class ExpandedCard extends Component {
         if(id in bookmark) {
             delete bookmark[id];
             console.log(bookmark);
+            localStorage.setItem('bookmark', JSON.stringify(bookmark));
             toast(<BookmarkNotification message={"Removing"} title={this.props.title} />, { className: "notification-tab", autoClose: 3000 });
         }
         else {
-            bookmark[id] = 1;
+            bookmark[id] = {
+                title: this.props.title,
+                img: this.props.img_url,
+                description: this.props.description,
+                date: this.props.date,
+                section: this.props.section,
+                url: this.props.url
+            };
             console.log(bookmark);
+            localStorage.setItem('bookmark', JSON.stringify(bookmark));
             toast(<BookmarkNotification message={"Saving"} title={this.props.title} />, { className: "notification-tab", autoClose: 3000 });
         }
         this.setState({ bookmarked: this.state.bookmarked ? false : true });
@@ -292,11 +302,29 @@ class ExpandedCard extends Component {
 }
 
 class Favorites extends Component {
+    constructor(props) {
+        super(props);
+        this.share = this.share.bind(this);
+    }
+    
+    share(e) {
+        e.stopPropagation();
+        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab" });
+    }
 
-    render () {
+    render = () => {
         return (
             <>
                 <h3 className="favorites-title"><b>Favorites</b></h3>
+                <CardDeck>
+                    { Object.keys(bookmark).map((article) =>
+                        <Card key={article}>
+                            <Card.Body>
+                                <Card.Text>{bookmark[article].title}</Card.Text>
+                            </Card.Body>
+                        </Card> 
+                    ) }
+                </CardDeck>
             </>
         );
     }
@@ -391,28 +419,19 @@ class MainComponent extends Component {
     }
 
     render = () => {
-        if(this.state.page.slice(this.state.page.search("-")+1) === "favorites") {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
-                        <Favorites url={this.state.page} changePage={this.changePage.bind(this)} />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
-                    </div>
-                </>
-            );
-        }
-        else {
-            return (
-                <>
-                    <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
-                    <div className="main-container">
+        return (
+            <>
+                <NavigationBar data={{ page: this.state.page, changePage: this.changePage.bind(this) }} />
+                <div className="main-container">
+                    {
+                        this.state.page.slice(this.state.page.search("-")+1) === "favorites" ?
+                        <Favorites url={this.state.page} changePage={this.changePage.bind(this)} /> :
                         <Headlines url={this.state.page} changePage={this.changePage.bind(this)} />
-                        <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
-                    </div>
-                </>
-            );
-        }
+                    }
+                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
+                </div>
+            </>
+        );
     }
 }
 
