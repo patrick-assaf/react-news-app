@@ -182,7 +182,8 @@ class ArticleCard extends Component {
                     </div>
                     <Card.Text><Truncate lines={3}>{this.props.description}</Truncate></Card.Text>
                     <div className="bottom-card-info">
-                        <Card.Text className="date-tag"><i>{this.props.date}</i></Card.Text><SectionTag section={this.props.section} />
+                        <Card.Text className="date-tag"><i>{this.props.date}</i></Card.Text>
+                        <SectionTag section={this.props.section} />
                     </div>
                 </Card.Body>
             </Card>
@@ -224,7 +225,7 @@ class ExpandedCard extends Component {
     constructor(props) {
         super(props);
         this.share = this.share.bind(this);
-        this.state = { bookmarked: (this.props.id in bookmark) };
+        this.state = { bookmarked: (this.props.page in bookmark) };
     }
     
     share() {
@@ -286,7 +287,7 @@ class ExpandedCard extends Component {
                             name={this.state.bookmarked ? "bookmark" : "bookmark outline"} 
                             data-tip="Bookmark" 
                             className="card-buttons" 
-                            onClick={() => this.bookmark(this.props.id)}
+                            onClick={() => this.bookmark(this.props.page)}
                         />
                     </div>
                     <Card.Img variant="bottom" src={this.props.img_url} />
@@ -312,15 +313,25 @@ class Favorites extends Component {
         toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab" });
     }
 
+    articleClicked(id) {
+        this.props.changePage(id);
+    }
+
     render = () => {
         return (
             <>
                 <h3 className="favorites-title"><b>Favorites</b></h3>
-                <CardDeck>
+                <CardDeck className="deck">
                     { Object.keys(bookmark).map((article) =>
-                        <Card key={article}>
+                        <Card key={article} className="deck-cards" onClick={() => this.articleClicked(article)}>
                             <Card.Body>
-                                <Card.Text>{bookmark[article].title}</Card.Text>
+                                <Card.Text><b>{bookmark[article].title}</b></Card.Text>
+                                <Image src={bookmark[article].img} thumbnail className="deck-cards-img"/>
+                                <div className="bottom-card-info">
+                                    <Card.Text className="date-tag"><i>{bookmark[article].date}</i></Card.Text>
+                                    <SectionTag section={article.slice(0, article.search("-"))} />
+                                    <SectionTag section={bookmark[article].section} />
+                                </div>
                             </Card.Body>
                         </Card> 
                     ) }
@@ -397,6 +408,7 @@ class Headlines extends Component {
                             date={articles.date} 
                             section={articles.section} 
                             url={articles.url} 
+                            page={this.props.url}
                         />}
                 </div>
             );
