@@ -80,6 +80,7 @@ html, body {
 }
 
 .headline-card-img {
+    display: block;
     max-height: 250px;
     max-width: 330px;
     object-fit: cover;
@@ -197,10 +198,7 @@ html, body {
     .headline-card {
         display: inline-block;
     }
-    .headline-card-img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 0;
+    .headline-container {
+        padding-top: 0;
     }
 }
