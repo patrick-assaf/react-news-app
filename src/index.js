@@ -112,27 +112,28 @@ const NavigationBar = props => {
     }
 
     return (
-        <>
-        <Navbar variant="dark" sticky={true} id="navigation-bar">
+        <Navbar variant="dark" sticky={true} id="navigation-bar" expand="lg">
             <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
-            <Nav className="mr-auto">
-            <Nav.Link style={{ color: isPageSelected("home") }} href="" onClick={() => sectionClicked("home")} >Home</Nav.Link>
-            <Nav.Link style={{ color: isPageSelected("world") }} href="" onClick={() => sectionClicked("world")} >World</Nav.Link>
-            <Nav.Link style={{ color: isPageSelected("politics") }} href="" onClick={() => sectionClicked("politics")} >Politics</Nav.Link>
-            <Nav.Link style={{ color: isPageSelected("business") }} href="" onClick={() => sectionClicked("business")} >Business</Nav.Link>
-            <Nav.Link style={{ color: isPageSelected("technology") }} href="" onClick={() => sectionClicked("technology")} >Technology</Nav.Link>
-            <Nav.Link style={{ color: isPageSelected("sport") }} href="" onClick={() => sectionClicked("sport")} >Sports</Nav.Link>
-            </Nav>
-            <Icon 
-                inverted color="grey" 
-                size="large" 
-                name={props.data.page.slice(props.data.page.search("-")+1) === "favorites" ? "bookmark" : "bookmark outline"} 
-                className="bookmark-icon" 
-                onClick={() => sectionClicked("favorites")} 
-            />
-            {(isSectionOrUrl(props.data.page)) ? <SwitchButton data={props.data} /> : <></>}
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                <Nav.Link style={{ color: isPageSelected("home") }} href="" onClick={() => sectionClicked("home")} >Home</Nav.Link>
+                <Nav.Link style={{ color: isPageSelected("world") }} href="" onClick={() => sectionClicked("world")} >World</Nav.Link>
+                <Nav.Link style={{ color: isPageSelected("politics") }} href="" onClick={() => sectionClicked("politics")} >Politics</Nav.Link>
+                <Nav.Link style={{ color: isPageSelected("business") }} href="" onClick={() => sectionClicked("business")} >Business</Nav.Link>
+                <Nav.Link style={{ color: isPageSelected("technology") }} href="" onClick={() => sectionClicked("technology")} >Technology</Nav.Link>
+                <Nav.Link style={{ color: isPageSelected("sport") }} href="" onClick={() => sectionClicked("sport")} >Sports</Nav.Link>
+                </Nav>
+                <Icon 
+                    inverted color="grey" 
+                    size="large" 
+                    name={props.data.page.slice(props.data.page.search("-")+1) === "favorites" ? "bookmark" : "bookmark outline"} 
+                    className="bookmark-icon" 
+                    onClick={() => sectionClicked("favorites")} 
+                />
+                {(isSectionOrUrl(props.data.page)) ? <SwitchButton data={props.data} /> : <></>}
+            </Navbar.Collapse>
         </Navbar>
-        </>
     );
 }
 
