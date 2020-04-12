@@ -306,15 +306,28 @@ class Favorites extends Component {
     constructor(props) {
         super(props);
         this.share = this.share.bind(this);
+        this.trash = this.trash.bind(this);
+        this.state = {
+            bookmark: bookmark
+        }
     }
     
-    share(e) {
+    share(e, title, url) {
         e.stopPropagation();
-        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab" });
+        toast(<ShareTab title={title} url={url} />, { className: "notification-tab" });
     }
 
-    articleClicked(url) {
-        this.props.changePage(url);
+    trash(e, title, id) {
+        e.stopPropagation();
+        delete bookmark[id]
+        this.setState({ bookmark: bookmark });
+        console.log(this.state.bookmark);
+        localStorage.setItem('bookmark', JSON.stringify(this.state.bookmark));
+        toast(<BookmarkNotification message={"Removing"} title={title} />, { className: "notification-tab", autoClose: 3000 });
+    }
+
+    articleClicked(id) {
+        this.props.changePage(id);
     }
 
     render = () => {
@@ -322,15 +335,19 @@ class Favorites extends Component {
             <>
                 <h3 className="favorites-title"><b>Favorites</b></h3>
                 <CardDeck className="deck">
-                    { Object.keys(bookmark).map((article) =>
+                    { Object.keys(this.state.bookmark).map((article) =>
                         <Card key={article} className="deck-cards" onClick={() => this.articleClicked(article)}>
                             <Card.Body>
-                                <Card.Text><b>{bookmark[article].title}</b></Card.Text>
-                                <Image src={bookmark[article].img} thumbnail className="deck-cards-img"/>
+                                <Card.Text className="deck-cards-title">
+                                    <b>{this.state.bookmark[article].title}</b>
+                                    <Icon name="share alternate" onClick={(e) => this.share(e, this.state.bookmark[article].title, this.state.bookmark[article].url)} className="deck-cards-icon" />
+                                    <Icon name="trash alternate" onClick={(e) => this.trash(e, this.state.bookmark[article].title, article)} className="deck-cards-icon" />
+                                </Card.Text>
+                                <Image src={this.state.bookmark[article].img} thumbnail className="deck-cards-img"/>
                                 <div className="bottom-card-info">
-                                    <Card.Text className="date-tag"><i>{bookmark[article].date}</i></Card.Text>
+                                    <Card.Text className="date-tag"><i>{this.state.bookmark[article].date}</i></Card.Text>
                                     <SectionTag section={article.slice(0, article.search("-"))} />
-                                    <SectionTag section={bookmark[article].section} />
+                                    <SectionTag section={this.state.bookmark[article].section} />
                                 </div>
                             </Card.Body>
                         </Card> 
