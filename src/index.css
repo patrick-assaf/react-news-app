@@ -71,6 +71,7 @@ html, body {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     display: grid;
     grid-template-columns: max-content auto;
+    grid-auto-flow: row;
 }
 
 .headline-card:hover, .deck-cards:hover {
@@ -78,8 +79,8 @@ html, body {
 }
 
 .headline-card-img {
-    height: 200px;
-    width: 300px;
+    max-height: 250px;
+    max-width: 330px;
     object-fit: cover;
     margin: 20px 0px 20px 20px;
 }
@@ -161,8 +162,8 @@ html, body {
 
 .deck-cards-img {
     margin-bottom: 10px;
-    height: 170px;
-    width: 300px;
+    max-height: 170px;
+    max-width: 300px;
     object-fit: cover;
 }
 
@@ -188,7 +189,14 @@ html, body {
 @media only screen and (max-width: 600px) {
     .notification-tab {
         width: 100%;
-        color: black;
-        cursor: auto;
+    }
+    .headline-card {
+        display: inline-block;
+    }
+    .headline-card-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0;
     }
 }
