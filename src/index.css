@@ -5,6 +5,23 @@ html, body {
 
 .source-toggle-title {
     color: white;
+    padding-top: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.bookmark-icon {
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+
+.react-switch {
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.mr-auto {
+    width: 100%;
 }
 
 .search-text-box {
@@ -14,6 +31,11 @@ html, body {
 #navigation-bar {
     background-image: linear-gradient(to right, #17284F, #476DB8);
     margin-bottom: 0px;
+}
+
+#basic-navbar-nav {
+    width: 100%;
+    text-align: left;
 }
 
 .react-switch:focus {
@@ -161,4 +183,12 @@ html, body {
 
 .deck-cards-icon {
     padding-left: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .notification-tab {
+        width: 100%;
+        color: black;
+        cursor: auto;
+    }
 }

@@ -73,7 +73,7 @@ const SwitchButton = props => {
 
     return (
         <>
-            <span className="source-toggle-title">&nbsp;&nbsp;NYTimes&nbsp;&nbsp;&nbsp;</span>
+            <span className="source-toggle-title">NYTimes</span>
             <Switch 
                 uncheckedIcon={false} 
                 checkedIcon={false} 
@@ -83,7 +83,7 @@ const SwitchButton = props => {
                 checked={state}
                 data={props.data}
             />
-            <span className="source-toggle-title">&nbsp;&nbsp;&nbsp;&nbsp;Guardian</span>
+            <span className="source-toggle-title">Guardian</span>
         </>
     );
 }
@@ -124,6 +124,7 @@ const NavigationBar = props => {
                 <Nav.Link style={{ color: isPageSelected("technology") }} href="" onClick={() => sectionClicked("technology")} >Technology</Nav.Link>
                 <Nav.Link style={{ color: isPageSelected("sport") }} href="" onClick={() => sectionClicked("sport")} >Sports</Nav.Link>
                 </Nav>
+                <Nav>
                 <Icon 
                     inverted color="grey" 
                     size="large" 
@@ -132,6 +133,7 @@ const NavigationBar = props => {
                     onClick={() => sectionClicked("favorites")} 
                 />
                 {(isSectionOrUrl(props.data.page)) ? <SwitchButton data={props.data} /> : <></>}
+                </Nav>
             </Navbar.Collapse>
         </Navbar>
     );
@@ -178,8 +180,8 @@ class ArticleCard extends Component {
                 <Image src={this.props.img_url} thumbnail className="headline-card-img"/>
                 <Card.Body className="headline-container">
                     <div className="title-container">
-                        <Card.Title className="article-title"><h5><b>{this.props.title}</b></h5></Card.Title>
-                        <Icon name="share alternate" onClick={(e) => this.share(e)} />
+                        <Card.Title className="article-title"><i><b>{this.props.title}</b></i>
+                        <Icon name="share alternate" onClick={(e) => this.share(e)} /></Card.Title>
                     </div>
                     <Card.Text><Truncate lines={3}>{this.props.description}</Truncate></Card.Text>
                     <div className="bottom-card-info">
@@ -269,7 +271,7 @@ class ExpandedCard extends Component {
             <>
             <Card className="card-details">
                 <Card.Body>
-                    <Card.Title><h1><b>{this.props.title}</b></h1></Card.Title>
+                    <Card.Title><h1><i>{this.props.title}</i></h1></Card.Title>
                     <Card.Title className="date-tag"><h3><i>{this.props.date}</i></h3></Card.Title>
                     <div className="card-buttons-row">
                         <ReactTooltip  effect="solid"/>
