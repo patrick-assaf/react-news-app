@@ -401,7 +401,7 @@ class Headlines extends Component {
                             color={"#123abc"}
                             loading={true}
                         />
-                        <h4><b>Loading</b></h4>
+                        <h5><b>Loading</b></h5>
                     </div>
                 </>
             );

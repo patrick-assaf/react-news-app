@@ -5,7 +5,7 @@ html, body {
 
 .source-toggle-title {
     color: white;
-    padding-top: 5px;
+    margin-top: 5px;
     margin-right: 10px;
     font-size: 16px;
 }
@@ -13,6 +13,7 @@ html, body {
 .bookmark-icon {
     padding-top: 5px;
     padding-bottom: 20px;
+    padding-right: 30px;
 }
 
 .react-switch {
@@ -43,10 +44,10 @@ html, body {
 }
 
 .bounce-loader {
-    position: absolute;
-    left: 50%; 
-    top: 50%;
-    transform: translate(-50%, -50%);
+    margin-top: 100px;
+    display: inline-block;
+    text-align: center;
+    bottom: 0;
 }
 
 .main-container {
@@ -165,13 +166,13 @@ html, body {
 
 .deck-cards-img {
     margin-bottom: 10px;
-    max-height: 170px;
-    max-width: 300px;
+    max-height: 200px;
+    width: 100%;
     object-fit: cover;
 }
 
 .deck-cards {
-    width: 330px;
+    max-width: 400px;
     transition: 0.3s;
     border-radius: 4px 4px 4px 4px;
     text-align: left;
