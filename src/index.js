@@ -170,7 +170,6 @@ class SearchBar extends Component {
 
     handleResultSelect = (e, { result }) => {
         this.setState({ selectedResult: result });
-        console.log(this.props.data.page.slice(0, this.props.data.page.search("-"))+"-search-"+result.title);
         this.props.data.changePage(this.props.data.page.slice(0, this.props.data.page.search("-"))+"-search-"+result.title);
     }
 
@@ -423,6 +422,47 @@ class Favorites extends Component {
     }
 }
 
+class SearchResult extends Component {
+    constructor(props) {
+        super(props);
+        this.share = this.share.bind(this);
+    }
+    
+    share(e, title, url) {
+        e.stopPropagation();
+        toast(<ShareTab title={title} url={url} />, { className: "notification-tab" });
+    }
+
+    articleClicked(id) {
+        this.props.changePage(id);
+    }
+
+    render = () => {
+        return (
+            <>
+                <h3 className="favorites-title"><b>Results</b></h3>
+                <CardDeck className="deck">
+                    { this.props.articles.map((article) =>
+                        <Card key={article.key} className="deck-cards" onClick={() => this.articleClicked(this.props.url.slice(0, this.props.url.search("-")+1)+article.id) }>
+                            <Card.Body>
+                                <Card.Text className="deck-cards-title">
+                                    <b>{article.title}</b>
+                                    <Icon name="share alternate" onClick={(e) => this.share(e, article.title, article.url)} className="deck-cards-icon" />
+                                </Card.Text>
+                                <Image src={article.img} thumbnail className="deck-cards-img"/>
+                                <div className="bottom-card-info">
+                                    <Card.Text className="date-tag"><i>{article.date}</i></Card.Text>
+                                    <SectionTag section={article.section} />
+                                </div>
+                            </Card.Body>
+                        </Card> 
+                    ) }
+                </CardDeck>
+            </>
+        );
+    }
+}
+
 class Headlines extends Component {
     constructor(props) {
         super(props);
@@ -454,7 +494,13 @@ class Headlines extends Component {
 
     render = () => {
         const { articles } = this.state;
-        if (articles.length === 0) {
+        const path = this.props.url.slice(this.props.url.search("-")+1);
+        if(path.slice(0, path.search("-")) === "search") {
+            return (
+                <SearchResult articles={articles} url={this.props.url} changePage={this.props.changePage.bind(this)} />
+            ); 
+        }
+        else if (articles.length === 0) {
             return (
                 <>
                     <div className="bounce-loader">
@@ -467,7 +513,8 @@ class Headlines extends Component {
                     </div>
                 </>
             );
-        } else {
+        } 
+        else {
             return (
                 <div>
                     {(articles.length > 1) ? articles.map((article) =>
