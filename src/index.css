@@ -158,6 +158,12 @@ html, body {
     text-align: left;
 }
 
+.no-saved-articles {
+    color: rgb(99, 99, 99);
+    padding-left: 20px;
+    text-align: center;
+}
+
 .deck {
     margin: 0 auto;
     display: grid;

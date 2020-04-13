@@ -334,30 +334,37 @@ class Favorites extends Component {
     }
 
     render = () => {
-        return (
-            <>
-                <h3 className="favorites-title"><b>Favorites</b></h3>
-                <CardDeck className="deck">
-                    { Object.keys(this.state.bookmark).map((article) =>
-                        <Card key={article} className="deck-cards" onClick={() => this.articleClicked(article)}>
-                            <Card.Body>
-                                <Card.Text className="deck-cards-title">
-                                    <b>{this.state.bookmark[article].title}</b>
-                                    <Icon name="share alternate" onClick={(e) => this.share(e, this.state.bookmark[article].title, this.state.bookmark[article].url)} className="deck-cards-icon" />
-                                    <Icon name="trash alternate" onClick={(e) => this.trash(e, this.state.bookmark[article].title, article)} className="deck-cards-icon" />
-                                </Card.Text>
-                                <Image src={this.state.bookmark[article].img} thumbnail className="deck-cards-img"/>
-                                <div className="bottom-card-info">
-                                    <Card.Text className="date-tag"><i>{this.state.bookmark[article].date}</i></Card.Text>
-                                    <SectionTag section={article.slice(0, article.search("-"))} />
-                                    <SectionTag section={this.state.bookmark[article].section} />
-                                </div>
-                            </Card.Body>
-                        </Card> 
-                    ) }
-                </CardDeck>
-            </>
-        );
+        if(Object.keys(this.state.bookmark).length === 0) {
+            return (
+                <h3 className="no-saved-articles"><b>You have no saved articles</b></h3>
+            );
+        }
+        else {
+            return (
+                <>
+                    <h3 className="favorites-title"><b>Favorites</b></h3>
+                    <CardDeck className="deck">
+                        { Object.keys(this.state.bookmark).map((article) =>
+                            <Card key={article} className="deck-cards" onClick={() => this.articleClicked(article)}>
+                                <Card.Body>
+                                    <Card.Text className="deck-cards-title">
+                                        <b>{this.state.bookmark[article].title}</b>
+                                        <Icon name="share alternate" onClick={(e) => this.share(e, this.state.bookmark[article].title, this.state.bookmark[article].url)} className="deck-cards-icon" />
+                                        <Icon name="trash alternate" onClick={(e) => this.trash(e, this.state.bookmark[article].title, article)} className="deck-cards-icon" />
+                                    </Card.Text>
+                                    <Image src={this.state.bookmark[article].img} thumbnail className="deck-cards-img"/>
+                                    <div className="bottom-card-info">
+                                        <Card.Text className="date-tag"><i>{this.state.bookmark[article].date}</i></Card.Text>
+                                        <SectionTag section={article.slice(0, article.search("-"))} />
+                                        <SectionTag section={this.state.bookmark[article].section} />
+                                    </div>
+                                </Card.Body>
+                            </Card> 
+                        ) }
+                    </CardDeck>
+                </>
+            );
+        }
     }
 }
 
