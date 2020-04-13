@@ -1,6 +1,7 @@
 html, body {
     text-align: center;
     margin: 0 auto;
+    overflow-x: hidden;
 }
 
 .source-toggle-title {
@@ -26,7 +27,7 @@ html, body {
 }
 
 .search-text-box {
-    width: 250px;
+    width: 300px;
 }
 
 #navigation-bar {
@@ -81,10 +82,10 @@ html, body {
 
 .headline-card-img {
     display: block;
-    max-height: 250px;
-    max-width: 330px;
+    max-height: 200px;
+    max-width: 90%;
     object-fit: cover;
-    margin: 20px 0px 20px 20px;
+    margin: 20px 20px 20px 20px;
 }
 
 .bottom-card-info {
@@ -112,7 +113,7 @@ html, body {
 }
 
 .notification-tab {
-    width: 400px;
+    min-width: 400px;
     color: black;
     cursor: auto;
 }
@@ -173,7 +174,6 @@ html, body {
 
 .deck-cards-img {
     margin-bottom: 10px;
-    max-height: 200px;
     width: 100%;
     object-fit: cover;
 }
@@ -206,5 +206,8 @@ html, body {
     }
     .headline-container {
         padding-top: 0;
+    }
+    .search-text-box {
+        width: 80%;
     }
 }
