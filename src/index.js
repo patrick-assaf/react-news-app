@@ -146,7 +146,10 @@ class SearchBar extends Component {
         this.state = { results: [], selectedResult: null };
     }
 
+    delay = interval => new Promise(resolve => setTimeout(resolve, interval));
+
     handleSearchChange = async (event, { value }) => {
+        await this.delay(1000);
         try {
             const response = await fetch(
                 `https://api.cognitive.microsoft.com/bing/v7.0/suggestions?q=${value}`,
@@ -165,8 +168,10 @@ class SearchBar extends Component {
         }
     };
 
-    handleResultSelect = (e, { result }) =>
+    handleResultSelect = (e, { result }) => {
         this.setState({ selectedResult: result });
+        console.log(result.title);
+    }
 
     render () {
         return (
