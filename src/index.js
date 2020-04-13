@@ -170,7 +170,8 @@ class SearchBar extends Component {
 
     handleResultSelect = (e, { result }) => {
         this.setState({ selectedResult: result });
-        console.log(result.title);
+        console.log(this.props.data.page.slice(0, this.props.data.page.search("-"))+"-search-"+result.title);
+        this.props.data.changePage(this.props.data.page.slice(0, this.props.data.page.search("-"))+"-search-"+result.title);
     }
 
     render () {
