@@ -25,8 +25,12 @@ html, body {
     width: 100%;
 }
 
-.search-text-box {
+.search-field {
     width: 300px;
+}
+
+.search-box {
+    width: 100%;
 }
 
 #navigation-bar {
@@ -209,7 +213,7 @@ html, body {
     .headline-container {
         padding-top: 0;
     }
-    .search-text-box {
+    .search-field {
         width: 80%;
     }
 }

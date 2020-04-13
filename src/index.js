@@ -1,22 +1,23 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Switch from "react-switch";
+import Switch from 'react-switch';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
-import { Icon, Input } from 'semantic-ui-react';
+import { Icon, Form, Search } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { EmailShareButton, FacebookShareButton, TwitterShareButton } from "react-share";
-import { EmailIcon, FacebookIcon, TwitterIcon } from "react-share";
-import BounceLoader from "react-spinners/BounceLoader";
+import { EmailShareButton, FacebookShareButton, TwitterShareButton } from 'react-share';
+import { EmailIcon, FacebookIcon, TwitterIcon } from 'react-share';
+import BounceLoader from 'react-spinners/BounceLoader';
 import ReactTooltip from 'react-tooltip';
 import Truncate from 'react-truncate';
 import { animateScroll as scroll } from 'react-scroll';
+import _ from 'lodash';
 import commentBox from 'commentbox.io';
 import './index.css';
 
@@ -113,7 +114,7 @@ const NavigationBar = props => {
 
     return (
         <Navbar variant="dark" sticky={true} id="navigation-bar" expand="lg">
-            <Input icon="angle down" type="text" placeholder="Enter keyword..." className="search-text-box" />
+            <SearchBar data={props.data} />
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
@@ -137,6 +138,54 @@ const NavigationBar = props => {
             </Navbar.Collapse>
         </Navbar>
     );
+}
+
+class SearchBar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { results: [], selectedResult: null };
+    }
+
+    handleSearchChange = async (event, { value }) => {
+        try {
+            const response = await fetch(
+                `https://api.cognitive.microsoft.com/bing/v7.0/suggestions?q=${value}`,
+                {
+                    headers: {
+                        "Ocp-Apim-Subscription-Key": "3142b2de570948a6b9a5ec66c000cc2d"
+                    }
+                }
+            );
+            const data = await response.json();
+            const resultsRaw = data.suggestionGroups[0].searchSuggestions;
+            const results = resultsRaw.map(result => ({ title: result.displayText, url: result.url }));
+            this.setState({ results });
+        } catch (error) {
+            console.error(`Error fetching search ${value}`);
+        }
+    };
+
+    handleResultSelect = (e, { result }) =>
+        this.setState({ selectedResult: result });
+
+    render () {
+        return (
+            <Form className="search-field">
+                <Form.Field className="search-box">
+                <Search 
+                    icon="angle down" 
+                    type="text" 
+                    placeholder="Enter keyword..." 
+                    onSearchChange={_.debounce(this.handleSearchChange, 1000, {
+                        leading: true
+                    })}
+                    results={this.state.results}
+                    onResultSelect={this.handleResultSelect}
+                />
+                </Form.Field>
+            </Form>
+        );
+    }
 }
 
 const ShareTab = props => (
