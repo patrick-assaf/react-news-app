@@ -91,7 +91,10 @@ const SwitchButton = props => {
 
 const NavigationBar = props => {
 
+    const [state, setState] = React.useState(0);
+
     const sectionClicked = (section) => {
+        setState(state === 0 ? 1 : 0);
         if(props.data.page === "guardian-"+section || props.data.page === "nytimes-"+section) {
             return;
         }
@@ -114,7 +117,7 @@ const NavigationBar = props => {
 
     return (
         <Navbar variant="dark" sticky={true} id="navigation-bar" expand="lg">
-            <SearchBar data={props.data} />
+            <SearchBar data={props.data} key={state} />
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
