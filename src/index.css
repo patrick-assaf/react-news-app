@@ -1,7 +1,6 @@
 html, body {
     text-align: center;
     margin: 0 auto;
-    overflow-x: hidden;
 }
 
 .source-toggle-title {
@@ -82,8 +81,9 @@ html, body {
 
 .headline-card-img {
     display: block;
-    max-height: 200px;
-    max-width: 90%;
+    min-height: 200px;
+    max-width: 300px;
+    min-width: 90%;
     object-fit: cover;
     margin: 20px 20px 20px 20px;
 }
