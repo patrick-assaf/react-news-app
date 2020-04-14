@@ -116,7 +116,7 @@ html, body {
 }
 
 .notification-tab {
-    min-width: 400px;
+    width: 400px;
     color: black;
     cursor: auto;
 }

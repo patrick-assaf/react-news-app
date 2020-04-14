@@ -9,7 +9,7 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import { Icon, Form, Search } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ToastContainer, toast, Slide } from 'react-toastify';
+import { ToastContainer, toast, Slide, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { EmailShareButton, FacebookShareButton, TwitterShareButton } from 'react-share';
 import { EmailIcon, FacebookIcon, TwitterIcon } from 'react-share';
@@ -228,7 +228,7 @@ class ArticleCard extends Component {
     
     share(e) {
         e.stopPropagation();
-        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab" });
+        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab", containerId:"share" });
     }
 
     render () {
@@ -289,7 +289,7 @@ class ExpandedCard extends Component {
     }
     
     share() {
-        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab" });
+        toast(<ShareTab title={this.props.title} url={this.props.url} />, { className: "notification-tab", containerId:"share" });
     }
 
     bookmark(id) {
@@ -297,7 +297,7 @@ class ExpandedCard extends Component {
             delete bookmark[id];
             console.log(bookmark);
             localStorage.setItem('bookmark', JSON.stringify(bookmark));
-            toast(<BookmarkNotification message={"Removing"} title={this.props.title} />, { className: "notification-tab", autoClose: 3000 });
+            toast(<BookmarkNotification message={"Removing"} title={this.props.title} />, { className: "notification-tab", autoClose: 3000, containerId:"notify" });
         }
         else {
             bookmark[id] = {
@@ -310,7 +310,7 @@ class ExpandedCard extends Component {
             };
             console.log(bookmark);
             localStorage.setItem('bookmark', JSON.stringify(bookmark));
-            toast(<BookmarkNotification message={"Saving"} title={this.props.title} />, { className: "notification-tab", autoClose: 3000 });
+            toast(<BookmarkNotification message={"Saving"} title={this.props.title} />, { className: "notification-tab", autoClose: 3000, containerId:"notify" });
         }
         this.setState({ bookmarked: this.state.bookmarked ? false : true });
     }
@@ -374,7 +374,7 @@ class Favorites extends Component {
     
     share(e, title, url) {
         e.stopPropagation();
-        toast(<ShareTab title={title} url={url} />, { className: "notification-tab" });
+        toast(<ShareTab title={title} url={url} />, { className: "notification-tab", containerId:"share" });
     }
 
     trash(e, title, id) {
@@ -383,7 +383,7 @@ class Favorites extends Component {
         this.setState({ bookmark: bookmark });
         console.log(this.state.bookmark);
         localStorage.setItem('bookmark', JSON.stringify(this.state.bookmark));
-        toast(<BookmarkNotification message={"Removing"} title={title} />, { className: "notification-tab", autoClose: 3000 });
+        toast(<BookmarkNotification message={"Removing"} title={title} />, { className: "notification-tab", autoClose: 3000, containerId:"notify" });
     }
 
     articleClicked(id) {
@@ -433,7 +433,7 @@ class SearchResult extends Component {
     
     share(e, title, url) {
         e.stopPropagation();
-        toast(<ShareTab title={title} url={url} />, { className: "notification-tab" });
+        toast(<ShareTab title={title} url={url} />, { className: "notification-tab", containerId:"share" });
     }
 
     articleClicked(id) {
@@ -572,7 +572,8 @@ class MainComponent extends Component {
                         <Favorites url={this.state.page} changePage={this.changePage.bind(this)} /> :
                         <Headlines key={this.state.new} url={this.state.page} changePage={this.changePage.bind(this)} />
                     }
-                    <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
+                    <ToastContainer enableMultiContainer={true} containerId="share" closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
+                    <ToastContainer enableMultiContainer={true} containerId="notify" closeOnClick={false} autoClose={false} position="top-center" transition={Zoom} hideProgressBar={true} />
                 </div>
             </>
         );
