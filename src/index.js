@@ -554,11 +554,11 @@ class MainComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { page: storedPage, newPage: 0 };
+        this.state = { page: storedPage, new: 0 };
     }
 
     changePage(newPage) {
-        this.setState({ page: newPage, newPage: this.state.newPage === 0 ? 1 : 0 });
+        this.setState({ page: newPage, new: this.state.new === 0 ? 1 : 0 });
         localStorage.setItem('page', JSON.stringify(newPage));
     }
 
@@ -570,7 +570,7 @@ class MainComponent extends Component {
                     {
                         this.state.page.slice(this.state.page.search("-")+1) === "favorites" ?
                         <Favorites url={this.state.page} changePage={this.changePage.bind(this)} /> :
-                        <Headlines key={this.state.newPage} url={this.state.page} changePage={this.changePage.bind(this)} />
+                        <Headlines key={this.state.new} url={this.state.page} changePage={this.changePage.bind(this)} />
                     }
                     <ToastContainer closeOnClick={false} autoClose={false} position="top-center" transition={Slide} hideProgressBar={true} />
                 </div>
