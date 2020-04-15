@@ -183,7 +183,7 @@ html, body {
 }
 
 .deck-cards {
-    max-width: 400px;
+    max-width: 350px;
     transition: 0.3s;
     border-radius: 4px 4px 4px 4px;
     text-align: left;
