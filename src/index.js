@@ -478,14 +478,14 @@ class Headlines extends Component {
     componentDidUpdate(state) {
         if (state.url !== this.props.url) {
             this.setState({ articles: [] });
-            fetch("https://assafp-nodejs.us-east-1.elasticbeanstalk.com/"+this.props.url.replace(/\//g, "~"))
+            fetch("http://localhost:5000/"+this.props.url.replace(/\//g, "~"))
             .then(result => result.json())
             .then(articles => this.setState({url: this.props.url, articles: articles}, () => console.log(this.state)));
         }
     }
 
     componentDidMount = () => {
-        fetch("https://assafp-nodejs.us-east-1.elasticbeanstalk.com/"+this.props.url.replace(/\//g, "~"))
+        fetch("http://localhost:5000/"+this.props.url.replace(/\//g, "~"))
             .then(result => result.json())
             .then(articles => this.setState({articles}, () => console.log(this.state)));
     }
