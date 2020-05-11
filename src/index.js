@@ -201,13 +201,13 @@ const ShareTab = props => (
         <h5>{props.title}</h5>
         <hr></hr>
         <p>Share via</p>
-        <FacebookShareButton hashtag="#CSCI_571_NewsApp" url={props.url} className="share-button">
+        <FacebookShareButton hashtag="#News" url={props.url} className="share-button">
             <FacebookIcon round={true} size={50} />
         </FacebookShareButton>
-        <TwitterShareButton url={props.url} hashtags={["CSCI_571_NewsApp"]} className="share-button">
+        <TwitterShareButton url={props.url} hashtags={["News"]} className="share-button">
             <TwitterIcon round={true} size={50} />
         </TwitterShareButton>
-        <EmailShareButton url={props.url} subject="CSCI_571_NewsApp" className="share-button">
+        <EmailShareButton url={props.url} subject="Check out this Article!" className="share-button">
             <EmailIcon round={true} size={50} />
         </EmailShareButton>
     </>
