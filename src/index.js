@@ -116,7 +116,7 @@ const NavigationBar = props => {
     }
 
     return (
-        <Navbar variant="dark" sticky={true} id="navigation-bar" expand="lg">
+        <Navbar variant="dark" sticky="top" id="navigation-bar" expand="lg">
             <SearchBar data={props.data} key={state} />
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -332,13 +332,13 @@ class ExpandedCard extends Component {
                     <Card.Title className="date-tag"><h3><i>{this.props.date}</i></h3></Card.Title>
                     <div className="card-buttons-row">
                         <ReactTooltip  effect="solid"/>
-                        <FacebookShareButton hashtag="#CSCI_571_NewsApp" url={this.props.url} data-tip="Facebook" className="card-buttons">
+                        <FacebookShareButton hashtag="#News" url={this.props.url} data-tip="Facebook" className="card-buttons">
                             <FacebookIcon round={true} size={30} />
                         </FacebookShareButton>
-                        <TwitterShareButton url={this.props.url} hashtags={["CSCI_571_NewsApp"]} data-tip="Twitter" className="card-buttons">
+                        <TwitterShareButton url={this.props.url} hashtags={["News"]} data-tip="Twitter" className="card-buttons">
                             <TwitterIcon round={true} size={30} />
                         </TwitterShareButton>
-                        <EmailShareButton url={this.props.url} subject="CSCI_571_NewsApp" data-tip="Email" className="card-buttons">
+                        <EmailShareButton url={this.props.url} subject="News" data-tip="Email" className="card-buttons">
                             <EmailIcon round={true} size={30} />
                         </EmailShareButton>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Icon 
